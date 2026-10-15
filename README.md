@@ -11,9 +11,9 @@
 
 | Команда | Что делает |
 |---|---|
-| `npm start` | dev-сервер esbuild на `http://localhost:3012` (отдаёт `dist`) |
+| `npm start` | dev-сервер esbuild на `http://localhost:3022` (отдаёт `dist`) |
 | `npm run build` | сборка в `dist` (минифицированный ESM + типы в `dist/types`) |
-| `npm run storybook` | Storybook на `http://localhost:6006` |
+| `npm run storybook` | Storybook на `http://localhost:6010` |
 | `npm run build-storybook` | статическая сборка Storybook |
 | `npm run typecheck` | проверка типов |
 
@@ -37,7 +37,7 @@
 </script>
 ```
 
-Локально `ant-ui` отдаётся `npm start` по адресу `http://localhost:3012/components/index.js`.
+Локально `ant-ui` отдаётся `npm start` по адресу `http://localhost:3022/components/index.js`.
 
 ### 2. Сборка микрофронта
 

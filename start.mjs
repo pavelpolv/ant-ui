@@ -47,7 +47,7 @@ const context = await esbuild.context({
 await context
   .serve({
     servedir: 'dist',
-    port: 3012,
+    port: 3022,
     host: 'localhost',
   })
   .then(({ host, port }) => {
