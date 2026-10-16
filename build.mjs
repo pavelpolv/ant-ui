@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import * as esbuild from 'esbuild';
 import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
@@ -26,7 +27,7 @@ let result = await esbuild.build({
         [cssnanoPlugin({ preset: 'default' })],
       ),
       type: 'style',
-      loadPaths: ['src/style/'],
+      loadPaths: [path.resolve(import.meta.dirname, 'src/style')],
     }),
   ],
   loader: { '.js': 'jsx', '.tsx': 'tsx' },
