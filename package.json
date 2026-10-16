@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node start.mjs",
-    "build": "rm -rf dist && node build.mjs && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "build": "rimraf dist && node build.mjs && tsc -p tsconfig.build.json --emitDeclarationOnly",
     "storybook": "storybook dev -p 6010",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit"
@@ -38,6 +38,7 @@
     "msw-storybook-addon": "^3.0.3",
     "postcss": "^8.5.30",
     "postcss-modules": "^9.0.1",
+    "rimraf": "^6.1.3",
     "sass": "^1.105.1",
     "storybook": "^10.6.2",
     "typescript": "^7.0.2",
