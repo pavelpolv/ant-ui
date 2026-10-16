@@ -1,3 +1,4 @@
+import path from 'node:path';
 import * as esbuild from 'esbuild';
 import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
@@ -32,7 +33,7 @@ const context = await esbuild.context({
         ],
       ),
       type: 'style',
-      loadPaths: ['src/style/'],
+      loadPaths: [path.resolve(import.meta.dirname, 'src/style')],
     }),
   ],
   loader: {
@@ -49,6 +50,7 @@ await context
     servedir: 'dist',
     port: 3022,
     host: 'localhost',
+    cors: { origin: '*' },
   })
   .then(({ host, port }) => {
     console.log(`Running at http://${host}:${port}`);
