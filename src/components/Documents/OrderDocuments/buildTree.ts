@@ -6,19 +6,6 @@ export type TreeRow =
   | { kind: 'docType'; key: string; name: string; children: TreeRow[] }
   | { kind: 'document'; key: string; document: DocumentData; level: number };
 
-const collapseFolder = (row: TreeRow & { kind: 'folder' }): TreeRow => {
-  const [only] = row.children;
-  if (row.children.length !== 1 || only.kind !== 'folder') return row;
-  return { ...only, name: `${row.name} / ${only.name}` };
-};
-
-const setLevels = (rows: TreeRow[], level: number) => {
-  for (const row of rows) {
-    if (row.kind === 'document') row.level = level;
-    else if (row.children) setLevels(row.children, level + 1);
-  }
-};
-
 const counterpartyRank = ({ counterpartyType, counterpartyPart }: Counterparty): number => {
   if (counterpartyType === 'HOLDING') return 0;
   if (counterpartyPart === 'Borrower') return 1;
@@ -49,7 +36,7 @@ export const buildTree = (structure: DocStructureResponse, data: DocumentsDataRe
       docsByType.set(doc.docType, docs);
     }
 
-    const buildFolders = (parentId: string | null): TreeRow[] =>
+    const buildFolders = (parentId: string | null, level: number): TreeRow[] =>
       (childFolders.get(parentId) ?? []).flatMap((folder): TreeRow[] => {
         const key = `${companyKey}/${folder.id}`;
         const docTypeInfo = [...folder.docTypeInfo].sort((a, b) => a.docInStrSort - b.docInStrSort);
@@ -57,15 +44,14 @@ export const buildTree = (structure: DocStructureResponse, data: DocumentsDataRe
           const docs = docsByType.get(docType.docType);
           if (!docs?.length) return [];
           const typeKey = `${key}/${docType.docType}`;
-          const children = docs.map((document): TreeRow => ({ kind: 'document', key: `${typeKey}/${document.nkpDocumentId}`, document, level: 0 }));
+          const children = docs.map((document): TreeRow => ({ kind: 'document', key: `${typeKey}/${document.nkpDocumentId}`, document, level: level + 2 }));
           return [{ kind: 'docType', key: typeKey, name: docType.docTypeName, children }];
         });
-        const children = [...docTypes, ...buildFolders(folder.id)];
-        return children.length ? [collapseFolder({ kind: 'folder', key, name: folder.strName, children })] : [];
+        const children = [...docTypes, ...buildFolders(folder.id, level + 1)];
+        return children.length ? [{ kind: 'folder', key, name: folder.strName, children }] : [];
       });
 
-    const folders = buildFolders(null);
-    setLevels(folders, 1);
+    const folders = buildFolders(null, 1);
     return { kind: 'company', key: companyKey, counterparty, children: folders.length ? folders : undefined };
   });
 };
