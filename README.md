@@ -16,6 +16,8 @@
 | `npm run storybook` | Storybook на `http://localhost:6010` |
 | `npm run build-storybook` | статическая сборка Storybook |
 | `npm run typecheck` | проверка типов |
+| `npm run lint` | проверка ESLint (стиль — [docs/code-style.md](docs/code-style.md)) |
+| `npm run lint:fix` | ESLint с автоисправлением |
 
 ## Подключение в микрофронте
 

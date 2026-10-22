@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { Preview } from '@storybook/react-vite';
 import { mswLoader } from 'msw-storybook-addon/csf3';
-import { defaultHandlers } from '../src/mocks/handlers';
-import { QueryClient, QueryClientProvider, UiProvider, createModalManager } from '../src/components';
+import { defaultHandlers } from '@/mocks/handlers';
+import { QueryClient, QueryClientProvider, UiProvider, createModalManager } from '@/components';
 
 const modals = createModalManager();
 

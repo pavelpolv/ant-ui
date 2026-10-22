@@ -5,7 +5,7 @@ import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import cssnanoPlugin from 'cssnano';
 
-let result = await esbuild.build({
+const result = await esbuild.build({
   entryPoints: ['./src/components/index.ts'],
   outdir: 'dist',
   outbase: 'src',

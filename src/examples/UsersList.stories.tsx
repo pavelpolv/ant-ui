@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { usersHandlers } from '../mocks/handlers';
+import { usersHandlers } from '@/mocks/handlers';
 import { UsersList } from './UsersList';
 
 const meta = {

@@ -1,4 +1,5 @@
 export * from './Button';
+export * from './Documents';
 export * from './UiProvider';
 export * from './modals';
 

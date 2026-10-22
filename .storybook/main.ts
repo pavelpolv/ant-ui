@@ -7,6 +7,10 @@ const config: StorybookConfig = {
   addons: ['msw-storybook-addon'],
   framework: { name: '@storybook/react-vite', options: {} },
   viteFinal: async (viteConfig) => {
+    viteConfig.resolve = {
+      ...viteConfig.resolve,
+      alias: { ...viteConfig.resolve?.alias, '@': path.resolve('src') },
+    };
     viteConfig.css = {
       ...viteConfig.css,
       preprocessorOptions: {

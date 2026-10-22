@@ -7,8 +7,12 @@ import {
   type ReactNode,
 } from 'react';
 
+// any: реестр хранит компоненты с любыми props; с unknown не сходятся типы из-за контравариантности props
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyComponent = ComponentType<any>;
 
+// `{} extends Props` — все props необязательные, тогда аргумент show() можно не передавать
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type ShowArgs<C extends AnyComponent> = {} extends ComponentProps<C>
   ? [props?: ComponentProps<C>]
   : [props: ComponentProps<C>];
@@ -52,7 +56,7 @@ const ModalContext = createContext<ModalHandler | null>(null);
  * Состояние хранится в замыкании, поэтому у каждого микрофронта свой экземпляр,
  * хотя сама библиотека общая (подключена через import map).
  */
-export function createModalManager(): ModalManager {
+export const createModalManager = (): ModalManager => {
   let entries: ModalEntry[] = [];
   let seq = 0;
   const listeners = new Set<() => void>();
@@ -118,27 +122,25 @@ export function createModalManager(): ModalManager {
   };
 
   return manager;
-}
+};
 
 /** Менеджер ближайшего Provider — для компонентов, которые не знают, в каком микрофронте живут. */
-export function useModals(): ModalManager {
+export const useModals = (): ModalManager => {
   const manager = useContext(ManagerContext);
   if (!manager) {
     throw new Error('useModals: не найден Provider. Оберните дерево в modals.Provider из createModalManager().');
   }
   return manager;
-}
+};
 
 /** Управление текущей модалкой изнутри её компонента. */
-export function useModal<R = unknown>(): ModalHandler<R> {
+export const useModal = <R = unknown,>(): ModalHandler<R> => {
   const modal = useContext(ModalContext);
   if (!modal) {
     throw new Error('useModal: компонент открыт не через show().');
   }
   return modal as ModalHandler<R>;
-}
+};
 
 /** То же, что useModal, но без ошибки вне show() — для Modal/Drawer, которые можно рендерить и вручную. */
-export function useOptionalModal(): ModalHandler | null {
-  return useContext(ModalContext);
-}
+export const useOptionalModal = (): ModalHandler | null => useContext(ModalContext);
