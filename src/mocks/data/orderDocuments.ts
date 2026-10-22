@@ -33,18 +33,13 @@ const DOC_TYPES = {
   creditOrder: 'c395a0fe-524b-4e12-a226-cddc2700b721',
 };
 
-const LEGAL_FOLDER = '92d360c2-b4a4-45bf-b70a-3836cea1bc5b';
-const LIMIT_FOLDER = 'e142a166-ef56-42f8-98fc-d58f50056910';
+const FINANCIAL_FOLDER = 'b5961fbd-cc7d-4ddf-b5f7-c4fe90fcd258';
+const KOD_FOLDER = 'ff124e9f-1f1e-43ca-b3ff-e744f5596462';
 
-/**
- * Реальный ответ /doc-structure. Отличия:
- * - в ответе бэкенда у подпапок strParent ссылается на несуществующие id
- *   (b5961fbd-… вместо LEGAL_FOLDER, ff124e9f-… вместо LIMIT_FOLDER) — здесь исправлено;
- * - порядок перемешан, чтобы было видно сортировку по strSort.
- */
+/** Реальный ответ /doc-structure, порядок элементов — как у бэкенда. */
 export const docStructure: DocStructureResponse = [
   {
-    id: LIMIT_FOLDER,
+    id: 'e142a166-ef56-42f8-98fc-d58f50056910',
     strLevel: 1,
     strName: 'Документы для установления Лимита на контрагента',
     strParent: null,
@@ -52,17 +47,31 @@ export const docStructure: DocStructureResponse = [
     docTypeInfo: [{ docType: DOC_TYPES.decisionDraft, docTypeName: 'Проект решения', docInStrSort: 1 }],
   },
   {
-    id: 'cbc35bb3-a751-48f3-9e89-ca739733752d',
+    id: '337aeace-d772-4a54-998d-43f0edd9532e',
     strLevel: 2,
-    strName: 'Дополнительные документы',
-    strParent: LEGAL_FOLDER,
-    strSort: 2,
-    docTypeInfo: [
-      { docType: DOC_TYPES.managementReport, docTypeName: 'Консолидированная управленческая отчетность и расшифровки к ней', docInStrSort: 1 },
-    ],
+    strName: 'Документы основания для КОД',
+    strParent: KOD_FOLDER,
+    strSort: 1,
+    docTypeInfo: [{ docType: DOC_TYPES.creditOrder, docTypeName: 'Распоряжение на учет (Кредитный договор)', docInStrSort: 1 }],
   },
   {
-    id: LEGAL_FOLDER,
+    id: KOD_FOLDER,
+    strLevel: 1,
+    strName: 'Документы для КОД',
+    strParent: null,
+    strSort: 4,
+    docTypeInfo: [],
+  },
+  {
+    id: FINANCIAL_FOLDER,
+    strLevel: 1,
+    strName: 'Финансовые документы',
+    strParent: null,
+    strSort: 2,
+    docTypeInfo: [],
+  },
+  {
+    id: '92d360c2-b4a4-45bf-b70a-3836cea1bc5b',
     strLevel: 1,
     strName: 'Юридические документы',
     strParent: null,
@@ -70,20 +79,22 @@ export const docStructure: DocStructureResponse = [
     docTypeInfo: [{ docType: DOC_TYPES.charter, docTypeName: 'Устав', docInStrSort: 1 }],
   },
   {
+    id: 'cbc35bb3-a751-48f3-9e89-ca739733752d',
+    strLevel: 2,
+    strName: 'Дополнительные документы',
+    strParent: FINANCIAL_FOLDER,
+    strSort: 2,
+    docTypeInfo: [
+      { docType: DOC_TYPES.managementReport, docTypeName: 'Консолидированная управленческая отчетность и расшифровки к ней', docInStrSort: 1 },
+    ],
+  },
+  {
     id: '291520ad-cab7-478a-9ad9-b46f1cb0541a',
     strLevel: 2,
     strName: 'Отчетность РСБУ / МСФО',
-    strParent: LEGAL_FOLDER,
+    strParent: FINANCIAL_FOLDER,
     strSort: 1,
     docTypeInfo: [{ docType: DOC_TYPES.balance, docTypeName: 'Бухгалтерский баланс (Ф1)', docInStrSort: 1 }],
-  },
-  {
-    id: '337aeace-d772-4a54-998d-43f0edd9532e',
-    strLevel: 2,
-    strName: 'Документы основания для КОД',
-    strParent: LIMIT_FOLDER,
-    strSort: 1,
-    docTypeInfo: [{ docType: DOC_TYPES.creditOrder, docTypeName: 'Распоряжение на учет (Кредитный договор)', docInStrSort: 1 }],
   },
 ];
 
