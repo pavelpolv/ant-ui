@@ -8,7 +8,7 @@ import {
   SafetyCertificateOutlined,
   SignatureOutlined,
 } from '@ant-design/icons';
-import type { ValueField } from './types';
+import type { ValueField } from './api';
 
 export interface FieldValue {
   label: string;

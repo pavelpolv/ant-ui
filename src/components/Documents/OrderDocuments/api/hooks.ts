@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchDocStructure, fetchDocumentsData, fetchOrder } from './api';
+import { fetchDocStructure, fetchDocumentsData, fetchOrder } from './requests';
 
 export const ORDER_DOCUMENTS_KEY = 'orderDocuments';
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { DocumentsTable } from '../common/DocumentsTable';
 import { buildTree } from './buildTree';
 import { COLUMNS } from './columns';
-import { useDocStructure, useDocumentsData, useOrder } from './hooks';
+import { useDocStructure, useDocumentsData, useOrder } from './api';
 
 const firstLoadError = (...queries: { data?: unknown; error: Error | null }[]) =>
   queries.find((query) => !query.data && query.error)?.error ?? null;

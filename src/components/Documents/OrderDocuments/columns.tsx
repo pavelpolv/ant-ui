@@ -1,10 +1,9 @@
 import { Flex, Tag, Typography, type TableColumnsType } from 'antd';
 import { DocumentTitle, FileList, FolderIcon, withIcon } from '../common/cells';
 import type { FileInfo } from '../common/types';
-import { downloadFile } from './api';
+import { downloadFile, type DocFile } from './api';
 import type { TreeRow } from './buildTree';
 import { FIELD_VALUES, STATUS_COLORS, VALUE_COLUMNS } from './fields';
-import type { DocFile } from './types';
 
 const toFileInfo = (file: DocFile): FileInfo => ({
   id: file.nkpFileId,

@@ -161,7 +161,7 @@ return row.kind === 'document' ? (
 | Константы модуля (URL, ключи, настройки) | UPPER_SNAKE_CASE | `ORDER_DOCUMENTS_KEY`, `VISIBLE_FILES` |
 | Запросы к API | `fetch…` / `save…` / `download…` | `fetchDocStructure`, `saveVersionField` |
 | Файлы компонентов | PascalCase | `OrderDocuments.tsx`, `DocumentModal.tsx` |
-| Остальные файлы | camelCase | `buildTree.ts`, `cells.tsx`, `api.ts`, `types.ts` |
+| Остальные файлы | camelCase | `buildTree.ts`, `cells.tsx`, `requests.ts`, `types.ts` |
 | Сторис | рядом с компонентом | `OrderDocuments.stories.tsx` |
 | Поля из API | как в ответе бэкенда, без переименования | `nkpCreatedBy`, `docTypeInfo` |
 
@@ -183,9 +183,11 @@ src/components/Documents/
     OrderDocuments.tsx          — компонент: запросы → строки → DocumentsTable
     OrderDocuments.stories.tsx  — сторис (все состояния: данные, пусто, загрузка, ошибки)
     index.ts
-    api.ts                      — функции запросов (axios)
-    hooks.ts                    — хуки react-query и префикс ключей
-    types.ts                    — типы ответов бэкенда (как в описании API)
+    api/                        — всё, что связано с запросами; снаружи импортируется только через './api'
+      index.ts
+      requests.ts               — функции запросов (axios)
+      hooks.ts                  — хуки react-query и префикс ключей
+      types.ts                  — типы ответов бэкенда (как в описании API)
     buildTree.ts                — сборка дерева из ответов, чистая логика без React
     columns.tsx                 — колонки; ответ бэкенда → props общих ячеек
     fields.tsx                  — настройки полей: подписи, иконки, ширины
@@ -196,7 +198,7 @@ src/components/Documents/
 - `common/` не импортирует ничего из подпапок компонентов. Ячейки принимают простые props (`name`, `version`, `FileInfo`), а не ответ бэкенда: каждый компонент приводит к ним свои данные в `columns.tsx`.
 - Если код нужен только одному компоненту — он в его подпапке. В `common/` переносим, когда он реально понадобился второму.
 - Логика отдельно от вёрстки: преобразование данных — чистые функции в `.ts`.
-- Запросы — только через функции из `api.ts` и только через `http` из `src/api/http.ts` — общий экземпляр axios для всех компонентов, добавляет `Authorization: Bearer <JWT из localStorage>` (не глобальный axios), ошибки HTTP бросает axios.
+- Запросы — только через функции из `api/requests.ts` и только через `http` из `src/api/http.ts` — общий экземпляр axios для всех компонентов, добавляет `Authorization: Bearer <JWT из localStorage>` (не глобальный axios), ошибки HTTP бросает axios.
 - Ключи react-query начинаются с константы компонента (`[ORDER_DOCUMENTS_KEY, 'documents', …]`), чтобы инвалидировать всё дерево одним вызовом.
 
 ## 10. Моки и сторис [договорённость]

@@ -1,6 +1,6 @@
 import { http } from '@/api/http';
-import { saveFile } from '../common/saveFile';
-import type { FileInfo } from '../common/types';
+import { saveFile } from '@/components/Documents/common/saveFile';
+import type { FileInfo } from '@/components/Documents/common/types';
 import type { DocStructureResponse, DocumentsDataResponse, Order, OrderResponse } from './types';
 
 export const fetchOrder = async (orderId: string): Promise<Order> => {
