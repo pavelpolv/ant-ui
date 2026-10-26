@@ -13,7 +13,6 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => {
-      // новый клиент на каждую историю, чтобы кеш не переходил между ними
       const [queryClient] = useState(
         () => new QueryClient({ defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } } }),
       );

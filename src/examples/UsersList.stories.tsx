@@ -10,7 +10,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// success подключён глобально в preview.tsx
 export const Success: Story = {};
 
 export const Empty: Story = {

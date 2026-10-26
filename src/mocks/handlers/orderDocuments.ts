@@ -6,7 +6,6 @@ const DOC_STRUCTURE_URL = '/doc-structure';
 const DOCUMENTS_DATA_URL = '/documents-data/:entityId';
 const DOWNLOAD_FILE_URL = '/elar-file/:nkpFileId';
 
-/** Сценарии для ручек OrderDocuments: в истории подключается нужный через msw.use(...). */
 export const orderDocumentsHandlers = {
   order: http.get(ORDER_URL, async () => {
     await delay(200);
@@ -24,7 +23,6 @@ export const orderDocumentsHandlers = {
     new HttpResponse(`Мок файла ${params.nkpFileId}`, { headers: { 'Content-Type': 'application/octet-stream' } }),
   ),
 
-  // бэкенд сообщает об ошибке в теле ответа со статусом 200
   orderError: http.get(ORDER_URL, () => HttpResponse.json({ error_code: 1, error: 'Заявка не найдена', order: null })),
   documentsEmpty: http.get(DOCUMENTS_DATA_URL, () => HttpResponse.json({ docLists: [] })),
   documentsError: http.get(DOCUMENTS_DATA_URL, () =>

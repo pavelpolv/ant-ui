@@ -21,9 +21,7 @@ const result = await esbuild.build({
     }),
     sassPlugin({
       transform: postcssModules(
-        {
-          // generateScopedName: '[path][local]'
-        },
+        {},
         [cssnanoPlugin({ preset: 'default' })],
       ),
       type: 'style',
@@ -37,5 +35,4 @@ const result = await esbuild.build({
   metafile: true,
 });
 
-// SAVE METADATA
 fs.writeFileSync('dist/meta.json', JSON.stringify(result.metafile));

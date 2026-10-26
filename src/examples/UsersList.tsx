@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useQuery } from '@/components';
 import type { User } from '@/mocks/data/users';
 
-/** Пример компонента с запросом через react-query (не входит в сборку библиотеки). */
 export const UsersList = () => {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['users'],

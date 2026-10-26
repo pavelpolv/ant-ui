@@ -9,7 +9,6 @@ import type {
 
 export const ORDER_ID = 'VYjXuo6HUEwS1e8lR0n9t';
 
-/** Ответ /order по реальному примеру (principal и tasks опущены). */
 export const order: OrderResponse = {
   error_code: 0,
   error: null,
@@ -24,7 +23,6 @@ export const order: OrderResponse = {
   },
 };
 
-// типы документов — id из реального ответа /doc-structure
 const DOC_TYPES = {
   charter: '1d820258-416c-4eb1-8e80-b92cdb102b6f',
   balance: '6a5189fb-694a-434b-b123-e6272462184c',
@@ -36,7 +34,6 @@ const DOC_TYPES = {
 const FINANCIAL_FOLDER = 'b5961fbd-cc7d-4ddf-b5f7-c4fe90fcd258';
 const KOD_FOLDER = 'ff124e9f-1f1e-43ca-b3ff-e744f5596462';
 
-/** Реальный ответ /doc-structure, порядок элементов — как у бэкенда. */
 export const docStructure: DocStructureResponse = [
   {
     id: 'e142a166-ef56-42f8-98fc-d58f50056910',
@@ -153,7 +150,6 @@ const doc = (
   },
 });
 
-/** Компании специально не по порядку: сортирует компонент. */
 export const documentsData: DocumentsDataResponse = {
   docLists: [
     {

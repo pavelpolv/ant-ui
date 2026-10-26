@@ -3,10 +3,6 @@ import { useOptionalModal } from './createModalManager';
 
 export type ModalProps = AntModalProps;
 
-/**
- * Modal из antd. Внутри компонента, открытого через show(), сам управляет
- * open/закрытием/удалением; вне show() работает как обычный antd Modal.
- */
 export const Modal = ({ open, onCancel, afterClose, ...props }: ModalProps) => {
   const modal = useOptionalModal();
   if (!modal) {
