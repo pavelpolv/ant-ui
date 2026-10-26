@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { usersHandlers } from '../mocks/handlers';
+import { usersHandlers } from '@/mocks/handlers';
 import { UsersList } from './UsersList';
 
 const meta = {
@@ -10,7 +10,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// success подключён глобально в preview.tsx
 export const Success: Story = {};
 
 export const Empty: Story = {
