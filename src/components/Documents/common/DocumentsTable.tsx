@@ -6,6 +6,7 @@ export interface DocumentsTableProps<T> {
   columns: TableColumnsType<T>;
   error?: Error | null;
   loading: boolean;
+  scrollX?: number;
 }
 
 export const DocumentsTable = <T extends { key: string }>({
@@ -13,6 +14,7 @@ export const DocumentsTable = <T extends { key: string }>({
   columns,
   error,
   loading,
+  scrollX = 1200,
 }: DocumentsTableProps<T>) => {
   if (error) return <Result status="error" title="Ошибка загрузки" subTitle={error.message} />;
   if (loading) return <Spin />;
@@ -27,7 +29,7 @@ export const DocumentsTable = <T extends { key: string }>({
       columns={columns}
       expandable={{ defaultExpandAllRows: true, indentSize: TREE_INDENT }}
       tableLayout="fixed"
-      scroll={{ x: 1200 }}
+      scroll={{ x: scrollX }}
       locale={{ emptyText: 'Документов нет' }}
     />
   );
