@@ -180,7 +180,7 @@ interface DocTypeDict {
   docSelectionByDetails: boolean;
   signType: DictList | null;
   period: DictList | null;
-  validityPeriod: DictList | null;   // в примере null, тип не известен
+  validityPeriod: DictList | null;   // в ответе бэкенда null, тип не известен
   initiatorChannel: DictList | null;
   provisionForm: DictList | null;
   assuranceLevel: DictList | null;
@@ -198,9 +198,9 @@ interface DocTypeDict {
 
 - Используются `assuranceLevel`, `provisionForm`, `signType`: `code` — значение в `versionData`, `value` — подпись.
 - Иконки — свои, по `code` (`common/fields.tsx`).
-- [ ] В примере ответа у `signType` и части `initiatorChannel` пустые `code` — в моке и иконках подставлены свои
+- [ ] В ответе бэкенда у `signType` и части `initiatorChannel` пустые `code` — в моке и иконках подставлены свои
   (`EMBEDDED`, `DETACHED`, `ABSENT`).
-- [ ] У `provisionForm` в примере только `ORIGINAL` — коды `PAPER` и `ELECTRONIC` придуманы.
+- [ ] У `provisionForm` в ответе бэкенда только `ORIGINAL` — коды `PAPER` и `ELECTRONIC` придуманы.
 
 ## Связи между ручками
 

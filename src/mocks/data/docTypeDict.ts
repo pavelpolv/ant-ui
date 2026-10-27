@@ -3,7 +3,7 @@ import { DOC_TYPES } from './orderDocuments';
 
 const list = (items: [string, string][]): DictList => ({ List: items.map(([code, value]) => ({ code, value })) });
 
-// TODO: в примере ответа коды signType и initiatorChannel пустые — подставлены свои
+// TODO: в ответе бэкенда коды signType и initiatorChannel пустые — подставлены свои
 const SIGN_TYPE = list([['EMBEDDED', 'Встроенная'], ['DETACHED', 'Открепленная'], ['ABSENT', 'Отсутствует']]);
 
 const ASSURANCE_LEVEL = list([
@@ -30,7 +30,7 @@ const baseDict = (id: string, name: string): DocTypeDict => ({
   ]),
   validityPeriod: null,
   initiatorChannel: list([['BANK', 'Банк'], ['OFFICE', 'Офис'], ['DBO', 'ДБО'], ['EMAIL', 'Эл.почта']]),
-  // TODO: в примере ответа для формы предоставления только ORIGINAL — PAPER и ELECTRONIC придуманы
+  // TODO: в ответе бэкенда для формы предоставления только ORIGINAL — PAPER и ELECTRONIC придуманы
   provisionForm: list([['PAPER', 'Бумажная'], ['ELECTRONIC', 'Электронная']]),
   assuranceLevel: ASSURANCE_LEVEL,
   usingCopy: false,

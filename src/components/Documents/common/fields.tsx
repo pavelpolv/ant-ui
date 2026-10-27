@@ -27,11 +27,11 @@ const FIELD_ICONS: Record<ValueField, Record<string, ReactNode>> = {
   },
   provisionForm: {
     ORIGINAL: <FileProtectOutlined />,
-    // TODO: кодов нет в примере ответа /docTypeDict — придуманы, сверить с бэкендом
+    // TODO: этих кодов нет в ответе бэкенда /docTypeDict — придуманы, сверить с бэкендом
     PAPER: <PrinterOutlined />,
     ELECTRONIC: <CloudOutlined />,
   },
-  // TODO: в примере ответа /docTypeDict коды пустые — придуманы, сверить с бэкендом
+  // TODO: в ответе бэкенда /docTypeDict коды пустые — придуманы, сверить с бэкендом
   signType: {
     EMBEDDED: <SafetyCertificateOutlined />,
     DETACHED: <DisconnectOutlined />,

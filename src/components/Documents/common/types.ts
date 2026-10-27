@@ -122,7 +122,7 @@ export interface DocTypeDict {
   docSelectionByDetails: boolean;
   signType: DictList | null;
   period: DictList | null;
-  // TODO: в примере ответа validityPeriod = null — тип не известен
+  // TODO: в ответе бэкенда validityPeriod = null — тип не известен
   validityPeriod: DictList | null;
   initiatorChannel: DictList | null;
   provisionForm: DictList | null;
