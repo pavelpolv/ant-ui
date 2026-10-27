@@ -3,9 +3,9 @@ import type {
   DocStructureResponse,
   DocumentData,
   DocumentsDataResponse,
-  OrderResponse,
   VersionData,
-} from '@/components/Documents/OrderDocuments/api';
+} from '@/components/Documents/common/types';
+import type { OrderResponse } from '@/components/Documents/OrderDocuments/api';
 
 export const ORDER_ID = 'VYjXuo6HUEwS1e8lR0n9t';
 
@@ -23,7 +23,7 @@ export const order: OrderResponse = {
   },
 };
 
-const DOC_TYPES = {
+export const DOC_TYPES = {
   charter: '1d820258-416c-4eb1-8e80-b92cdb102b6f',
   balance: '6a5189fb-694a-434b-b123-e6272462184c',
   managementReport: '48896d8d-0878-435b-b0df-20e63d0b56fd',
@@ -126,14 +126,15 @@ const doc = (
   versionData: {
     ekdDocId: `ekd-${id}`,
     nkpDocId: id,
+    docInEntityId: `${ORDER_ID}~${id}`,
     newVersion: false,
     version,
-    statusCode: 'ACTIVE',
-    statusName: 'Действующий',
+    statusCode: 'Actual',
+    statusName: 'Актуальный',
     docName: name,
     docDate: at,
     docNumber: number,
-    signType: 'ELECTRONIC_SIGNATURE',
+    signType: 'EMBEDDED',
     validityPeriod: '',
     initiatorChannel: '',
     provisionForm: 'ELECTRONIC',
@@ -153,16 +154,16 @@ const doc = (
 export const documentsData: DocumentsDataResponse = {
   docLists: [
     {
-      counterparty: { counterpartyCode: 'cp-3', counterpartyName: 'Без документов', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Guarantor' },
+      counterparty: { counterparty: 'cp-3', counterpartyCode: 'cp-3', counterpartyName: 'Без документов', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Guarantor' },
       documentData: [],
     },
     {
-      counterparty: { counterpartyCode: 'cp-2', counterpartyName: 'ООО Ромашка-Строй', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Borrower' },
+      counterparty: { counterparty: 'cp-2', counterpartyCode: 'cp-2', counterpartyName: 'ООО Ромашка-Строй', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Borrower' },
       documentData: [
         doc('doc-2', DOC_TYPES.balance, 'Ф1-2024', 'Бухгалтерский баланс за 2024 год', '2025-02-13T10:00:00Z', 'Иванов Сергей Григорьевич', 2, [
           file('f-2', 'Бухгалтерский баланс ООО Ромашка-Строй за 2024 год с отметкой ИФНС.pdf', '2025-02-13T10:00:00Z', 'Иванов Сергей Григорьевич'),
           file('f-3', 'Квитанция о приеме налоговой декларации в электронном виде.pdf', '2025-02-27T10:00:00Z', 'Иванов Сергей Григорьевич'),
-        ]),
+        ], { statusCode: 'InProgress', statusName: 'В работе' }),
         doc('doc-3', DOC_TYPES.creditOrder, '002-211918', 'Распоряжение на учет № 002-211918', '2025-06-02T10:00:00Z', 'Петров Никита Дмитриевич', 4, [
           file('f-4', 'Распоряжение 002-211918 от 02.06.2025.pdf', '2025-06-02T10:00:00Z', 'Петров Никита Дмитриевич'),
           file('f-5', 'Кредитный договор КД_002-211796 от 11.02.2025.pdf', '2025-02-11T10:00:00Z', 'Петров Никита Дмитриевич'),
@@ -173,20 +174,27 @@ export const documentsData: DocumentsDataResponse = {
             '2025-02-14T10:00:00Z',
             'Сидорова Виктория Юрьевна',
           ),
-        ], { assuranceLevel: 'NOTARIAL_COPY', provisionForm: 'PAPER', signType: 'HANDWRITTEN' }),
+        ], {
+          statusCode: 'Archive',
+          statusName: 'Неактуальный',
+          assuranceLevel: 'COPY_NOTARY',
+          provisionForm: 'PAPER',
+          signType: 'DETACHED',
+        }),
         doc('doc-4', DOC_TYPES.decisionDraft, '15', 'Проект решения № 15 об установлении лимита', '2025-07-01T10:00:00Z', 'Петров Никита Дмитриевич', 1, [], {
-          statusCode: 'ON_REVIEW',
-          statusName: 'На проверке',
-          assuranceLevel: 'CLIENT_CERTIFIED_COPY',
+          statusCode: 'InApprove',
+          statusName: 'Согласование',
+          assuranceLevel: 'COPY_AUTHOR',
+          provisionForm: 'COURIER',
         }),
       ],
     },
     {
-      counterparty: { counterpartyCode: 'cp-1', counterpartyName: 'ГК Ромашка', counterpartyType: 'HOLDING', counterpartyPart: '' },
+      counterparty: { counterparty: 'cp-1', counterpartyCode: 'cp-1', counterpartyName: 'ГК Ромашка', counterpartyType: 'HOLDING', counterpartyPart: '' },
       documentData: [
         doc('doc-1', DOC_TYPES.charter, '1', 'Устав ГК Ромашка (редакция 2025)', '2025-11-01T10:00:00Z', 'Иванов Сергей Григорьевич', 1, [
           file('f-1', 'Устав.pdf', '2025-11-01T10:00:00Z', 'Иванов Сергей Григорьевич'),
-        ]),
+        ], { provisionForm: 'ORIGINAL' }),
       ],
     },
   ],

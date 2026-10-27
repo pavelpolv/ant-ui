@@ -1,36 +1,5 @@
 import type { ReactNode } from 'react';
-import {
-  AuditOutlined,
-  CloudOutlined,
-  CopyOutlined,
-  FileProtectOutlined,
-  PrinterOutlined,
-  SafetyCertificateOutlined,
-  SignatureOutlined,
-} from '@ant-design/icons';
-import type { ValueField } from './api';
-
-export interface FieldValue {
-  label: string;
-  icon: ReactNode;
-}
-
-// TODO: коды значений предположительные — сверить со справочниками бэкенда
-export const FIELD_VALUES: Record<ValueField, Record<string, FieldValue>> = {
-  assuranceLevel: {
-    ORIGINAL: { label: 'Оригинал', icon: <FileProtectOutlined /> },
-    NOTARIAL_COPY: { label: 'Нотариальная копия', icon: <AuditOutlined /> },
-    CLIENT_CERTIFIED_COPY: { label: 'Копия, заверенная клиентом', icon: <CopyOutlined /> },
-  },
-  provisionForm: {
-    PAPER: { label: 'Бумажная', icon: <PrinterOutlined /> },
-    ELECTRONIC: { label: 'Электронная', icon: <CloudOutlined /> },
-  },
-  signType: {
-    ELECTRONIC_SIGNATURE: { label: 'ЭП', icon: <SafetyCertificateOutlined /> },
-    HANDWRITTEN: { label: 'Собственноручная', icon: <SignatureOutlined /> },
-  },
-};
+import type { ValueField } from '../common/types';
 
 export interface ValueColumn {
   key: string;
@@ -54,5 +23,9 @@ export const VALUE_COLUMNS: ValueColumn[] = [
   },
 ];
 
-// TODO: коды статусов предположительные — сверить с бэкендом
-export const STATUS_COLORS: Record<string, string> = { ACTIVE: 'green', ON_REVIEW: 'gold' };
+export const STATUS_COLORS: Record<string, string> = {
+  NewDoc: 'blue',
+  InProgress: 'gold',
+  InApprove: 'purple',
+  Actual: 'green',
+};

@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { DocumentsTable } from '../common/DocumentsTable';
+import { useDocStructure } from '../common/hooks';
 import { buildTree } from './buildTree';
 import { COLUMNS } from './columns';
-import { useDocStructure, useDocumentsData, useOrder } from './api';
+import { useDocumentsData, useOrder } from './api';
 
 const firstLoadError = (...queries: { data?: unknown; error: Error | null }[]) =>
   queries.find((query) => !query.data && query.error)?.error ?? null;

@@ -1,9 +1,10 @@
 import { Flex, Tag, Typography, type TableColumnsType } from 'antd';
-import { DocumentTitle, FileList, FolderIcon, withIcon } from '../common/cells';
-import type { FileInfo } from '../common/types';
-import { downloadFile, type DocFile } from './api';
+import { DocumentTitle, FileList, FolderIcon } from '../common/cells';
+import { FieldValue } from '../common/fields';
+import type { DocFile, FileInfo } from '../common/types';
+import { downloadFile } from './api';
 import type { TreeRow } from './buildTree';
-import { FIELD_VALUES, STATUS_COLORS, VALUE_COLUMNS } from './fields';
+import { STATUS_COLORS, VALUE_COLUMNS } from './fields';
 
 const toFileInfo = (file: DocFile): FileInfo => ({
   id: file.nkpFileId,
@@ -62,14 +63,14 @@ export const COLUMNS: TableColumnsType<TreeRow> = [
     onCell: groupSpan,
     render: (_: unknown, row: TreeRow) => {
       if (row.kind !== 'document') return null;
-      const { versionData } = row.document;
+      const { docType, versionData } = row.document;
       return (
         <Flex vertical gap={2}>
-          {fields.map((field) => {
-            const code = versionData[field];
-            const value = FIELD_VALUES[field][code];
-            return <div key={field}>{value ? withIcon(value.label, value.icon) : code}</div>;
-          })}
+          {fields.map((field) => (
+            <div key={field}>
+              <FieldValue docType={docType} field={field} code={versionData[field]} />
+            </div>
+          ))}
         </Flex>
       );
     },

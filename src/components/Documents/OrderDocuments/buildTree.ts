@@ -1,4 +1,4 @@
-import type { Counterparty, DocStructureResponse, DocumentData, DocumentsDataResponse } from './api';
+import type { Counterparty, DocStructureResponse, DocumentData, DocumentsDataResponse } from '../common/types';
 
 export type TreeRow =
   | { kind: 'company'; key: string; counterparty: Counterparty; children?: TreeRow[] }

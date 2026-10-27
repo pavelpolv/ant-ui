@@ -1,10 +1,10 @@
 import { delay, http, HttpResponse } from 'msw';
 import { docStructure, documentsData, order } from '../data/orderDocuments';
 
-const ORDER_URL = '/order/:orderId';
-const DOC_STRUCTURE_URL = '/doc-structure';
-const DOCUMENTS_DATA_URL = '/documents-data/:entityId';
-const DOWNLOAD_FILE_URL = '/elar-file/:nkpFileId';
+const ORDER_URL = '/credit-doc/order/:orderId';
+const DOC_STRUCTURE_URL = '/credit-doc/doc-structure';
+const DOCUMENTS_DATA_URL = '/credit-doc/documents-data/:entityId';
+const DOWNLOAD_FILE_URL = '/credit-doc/elar-file/:nkpFileId';
 
 export const orderDocumentsHandlers = {
   order: http.get(ORDER_URL, async () => {

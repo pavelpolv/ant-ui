@@ -1,6 +1,7 @@
 import { usersHandlers } from './users';
+import { docTypeDictDefaultHandlers, docTypeDictHandlers } from './docTypeDict';
 import { orderDocumentsDefaultHandlers, orderDocumentsHandlers } from './orderDocuments';
 
-export const defaultHandlers = [usersHandlers.success, ...orderDocumentsDefaultHandlers];
+export const defaultHandlers = [usersHandlers.success, ...docTypeDictDefaultHandlers, ...orderDocumentsDefaultHandlers];
 
-export { usersHandlers, orderDocumentsHandlers };
+export { usersHandlers, docTypeDictHandlers, orderDocumentsHandlers };

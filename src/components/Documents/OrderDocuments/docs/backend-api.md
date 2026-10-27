@@ -5,7 +5,7 @@
 ## 0. Заявка
 
 ```
-GET /order/{orderId}
+GET /credit-doc/order/{orderId}
 ```
 
 `orderId` приходит в компонент через props. Из ответа нужны `order.orderType` и `order.orderId` — из них собирается `entityId` (см. «Параметры»).
@@ -39,8 +39,10 @@ interface OrderResponse {
 > - `strLevel` начинается с 1, а не с 0 (в сборке дерева не используется);
 
 ```
-GET /doc-structure
+GET /credit-doc/doc-structure
 ```
+
+Общий для OrderDocuments и TaskDocuments: запрос и хук `useDocStructure` — в `common/`.
 
 ```ts
 interface DocStructureItem {
@@ -66,7 +68,7 @@ type DocStructureResponse = DocStructureItem[];
 Источник: [api/02-documents.png](api/02-documents.png)
 
 ```
-GET /documents-data/{entityId}
+GET /credit-doc/documents-data/{entityId}
 ```
 
 ```ts
@@ -80,6 +82,7 @@ interface DocList {
 }
 
 interface Counterparty {
+  counterparty: string;
   counterpartyCode: string;
   counterpartyName: string;
   counterpartyType: string;
@@ -148,6 +151,57 @@ interface DocFile {
 }
 ```
 
+## 3. Справочник типа документа
+
+```
+GET /credit-doc/docTypeDict/{docType}
+```
+
+`docType` — из `/doc-structure` (`docTypeInfo[].docType`, он же `DocumentData.docType`). Запрос — на каждый тип документа,
+ответ кешируется на время жизни страницы. Общий для OrderDocuments и TaskDocuments.
+
+```ts
+interface DictItem {
+  code: string;
+  value: string;           // подпись
+}
+
+interface DictList {
+  List: DictItem[];
+}
+
+interface DocTypeDict {
+  id: string;              // 1d820258-416c-4eb1-8e80-b92cdb102b6f
+  codeEkd: string;         // 443
+  shortName: string;       // Устав
+  fullName: string;
+  multipleInList: boolean;
+  client: boolean;
+  docSelectionByDetails: boolean;
+  signType: DictList | null;
+  period: DictList | null;
+  validityPeriod: DictList | null;   // в примере null, тип не известен
+  initiatorChannel: DictList | null;
+  provisionForm: DictList | null;
+  assuranceLevel: DictList | null;
+  usingCopy: boolean;
+  submittingOriginalDeadline: string | null;
+  primaryDocument: boolean;
+  taxMonitoringDoc: boolean;
+  archive: boolean;
+  createAt: string;        // 2026-05-05T16:23:20.455317+03:00[Europe/Moscow]
+  createBy: string;
+  updateAt: string | null;
+  updateBy: string | null;
+}
+```
+
+- Используются `assuranceLevel`, `provisionForm`, `signType`: `code` — значение в `versionData`, `value` — подпись.
+- Иконки — свои, по `code` (`common/fields.tsx`).
+- [ ] В примере ответа у `signType` и части `initiatorChannel` пустые `code` — в моке и иконках подставлены свои
+  (`EMBEDDED`, `DETACHED`, `ABSENT`).
+- [ ] У `provisionForm` в примере только `ORIGINAL` — коды `PAPER` и `ELECTRONIC` придуманы.
+
 ## Связи между ручками
 
 - Корневого узла нет.
@@ -192,7 +246,7 @@ interface DocFile {
 
 ## Параметры
 
-- В компонент через props приходит `orderId`. `entityId` для `/documents-data/{entityId}` собирается как `{order.orderType}~{order.orderId}` из ответа `GET /order/{orderId}`, например `setting-limit~VYjXuo6HUEwS1e8lR0n9t`.
+- В компонент через props приходит `orderId`. `entityId` для `/documents-data/{entityId}` собирается как `{order.orderType}~{order.orderId}` из ответа `GET /credit-doc/order/{orderId}`, например `setting-limit~VYjXuo6HUEwS1e8lR0n9t`.
 - Сначала запрашивается заявка, затем `/documents-data`. `/doc-structure` запрашивается параллельно с заявкой. Ошибка любой из трёх ручек — экран ошибки.
 
 ## Форматы
