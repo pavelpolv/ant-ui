@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Flex, Popover, Space, Tag, theme, Tooltip, Typography } from 'antd';
+import { App, Flex, Popover, Space, Tag, theme, Tooltip, Typography } from 'antd';
 import { FileTextOutlined, FolderFilled, PaperClipOutlined } from '@ant-design/icons';
 import { useModals } from '@/components/modals';
 import { DocumentModal } from './DocumentModal';
@@ -55,6 +55,7 @@ interface FileItemProps {
 }
 
 const FileItem = ({ file, download }: FileItemProps) => {
+  const { notification } = App.useApp();
   const mutation = useDownloadFile(file, download);
   return (
     <div>
@@ -64,7 +65,11 @@ const FileItem = ({ file, download }: FileItemProps) => {
           ellipsis
           type={mutation.isError ? 'danger' : undefined}
           disabled={mutation.isPending}
-          onClick={() => mutation.mutate()}
+          onClick={() =>
+            mutation.mutate(undefined, {
+              onError: (error) =>
+                notification.error({ title: 'Не удалось скачать файл', description: `${file.name}: ${error.message}` }),
+            })}
         >
           <PaperClipOutlined /> {file.name}
         </Typography.Link>

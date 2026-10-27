@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ConfigProvider } from 'antd';
+import { App, ConfigProvider } from 'antd';
 import ruRU from 'antd/locale/ru_RU';
 
 export interface UiProviderProps {
@@ -7,5 +7,7 @@ export interface UiProviderProps {
 }
 
 export const UiProvider = ({ children }: UiProviderProps) => (
-  <ConfigProvider locale={ruRU}>{children}</ConfigProvider>
+  <ConfigProvider locale={ruRU}>
+    <App component={false}>{children}</App>
+  </ConfigProvider>
 );

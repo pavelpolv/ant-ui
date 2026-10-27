@@ -1,4 +1,4 @@
-import { Select, Tooltip } from 'antd';
+import { App, Select, Tooltip } from 'antd';
 import { FieldSkeleton, fieldLabel } from '../common/fields';
 import { useFieldValues } from '../common/hooks';
 import type { DocumentData, ValueField } from '../common/types';
@@ -10,6 +10,7 @@ export interface FieldSelectProps {
 }
 
 export const FieldSelect = ({ document, field }: FieldSelectProps) => {
+  const { notification } = App.useApp();
   const mutation = useSaveField(document, field);
   const fieldValues = useFieldValues(document.docType);
   const items = fieldValues.data?.[field] ?? [];
@@ -31,7 +32,14 @@ export const FieldSelect = ({ document, field }: FieldSelectProps) => {
         status={error ? 'error' : undefined}
         loading={mutation.isPending || fieldValues.isLoading}
         disabled={mutation.isPending || fieldValues.isLoading}
-        onChange={(value) => mutation.mutate(value)}
+        onChange={(value) =>
+          mutation.mutate(value, {
+            onError: (saveError) =>
+              notification.error({
+                title: 'Не удалось сохранить изменения',
+                description: `${document.versionData.docName}: ${saveError.message}`,
+              }),
+          })}
       />
     </Tooltip>
   );
