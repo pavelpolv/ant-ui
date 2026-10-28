@@ -97,7 +97,7 @@ export const docStructure: DocStructureResponse = [
 
 const audit = (at: string, by: string) => ({ nkpCreatedBy: by, nkpCreateAt: at, nkpUpdateBy: by, nkpUpdateAt: at });
 
-const file = (id: string, fileName: string, at: string, by: string): DocFile => ({
+export const file = (id: string, fileName: string, at: string, by: string): DocFile => ({
   nkpFileId: id,
   fileName,
   format: fileName.split('.').pop() ?? '',
@@ -106,7 +106,7 @@ const file = (id: string, fileName: string, at: string, by: string): DocFile => 
   ...audit(at, by),
 });
 
-const doc = (
+export const doc = (
   id: string,
   docType: string,
   number: string,

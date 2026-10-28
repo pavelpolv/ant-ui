@@ -17,6 +17,30 @@ type Story = StoryObj<typeof meta>;
 
 export const Edit: Story = {};
 
+export const DeleteError: Story = {
+  beforeEach({ msw }) {
+    msw.use(taskDocumentsHandlers.deleteDocInEntityError);
+  },
+};
+
+export const AddDocumentError: Story = {
+  beforeEach({ msw }) {
+    msw.use(taskDocumentsHandlers.newDocumentToListError);
+  },
+};
+
+export const FileUploadError: Story = {
+  beforeEach({ msw }) {
+    msw.use(taskDocumentsHandlers.uploadFilePartialError);
+  },
+};
+
+export const DocTypesDictError: Story = {
+  beforeEach({ msw }) {
+    msw.use(taskDocumentsHandlers.docTypesDictError);
+  },
+};
+
 export const SaveError: Story = {
   beforeEach({ msw }) {
     msw.use(taskDocumentsHandlers.newVersionError);

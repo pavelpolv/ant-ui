@@ -1,7 +1,12 @@
 import { http } from '@/api/http';
 import { saveFile } from '@/components/Documents/common/saveFile';
 import type { DocumentsDataResponse, FileInfo, ValueField } from '@/components/Documents/common/types';
-import type { NewVersionRequest } from './types';
+import type {
+  DocTypesDictItem,
+  NewDocumentToListRequest,
+  NewDocumentToListResponse,
+  NewVersionRequest,
+} from './types';
 
 // TODO: entityId и параметры тела POST /taskList не описаны — уточнить у бэкенда
 export const fetchTaskList = async (taskId: string): Promise<DocumentsDataResponse> =>
@@ -16,6 +21,22 @@ export const saveVersionField = async (
 ): Promise<void> => {
   const body: NewVersionRequest = { versionData: { id: versionId, [field]: value } };
   await http.post(`/credit-doc/new-version/${documentId}`, body);
+};
+
+export const deleteDocInEntity = async (docInEntityId: string): Promise<void> => {
+  await http.delete(`/credit-doc/document-in-entity/${docInEntityId}`);
+};
+
+export const fetchDocTypesDict = async (): Promise<DocTypesDictItem[]> =>
+  (await http.get<DocTypesDictItem[]>('/credit-doc/docTypesDict', { params: { archive: false } })).data;
+
+export const createDocumentInList = async (body: NewDocumentToListRequest): Promise<string> =>
+  (await http.post<NewDocumentToListResponse>('/credit-doc/new-document-to-list', body)).data.docVersionId;
+
+export const uploadVersionFile = async (versionId: string, file: File): Promise<void> => {
+  const body = new FormData();
+  body.append('file', file);
+  await http.post(`/credit-doc/file/${versionId}`, body);
 };
 
 export const downloadFile = async ({ id, name }: FileInfo): Promise<void> => {

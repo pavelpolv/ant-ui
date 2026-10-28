@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { DocumentsTable } from '../common/DocumentsTable';
 import { useDocStructure } from '../common/hooks';
 import { buildTree } from './buildTree';
-import { COLUMNS } from './columns';
+import { createColumns } from './columns';
 import { SCROLL_X } from './fields';
 import { useTaskList } from './api';
 
@@ -22,11 +22,12 @@ export const TaskDocuments = ({ taskId }: TaskDocumentsProps) => {
     () => (structure.data && documents.data ? buildTree(structure.data, documents.data) : []),
     [structure.data, documents.data],
   );
+  const columns = useMemo(() => createColumns(taskId), [taskId]);
 
   return (
     <DocumentsTable
       rows={rows}
-      columns={COLUMNS}
+      columns={columns}
       error={firstLoadError(structure, documents)}
       loading={structure.isPending || documents.isPending}
       scrollX={SCROLL_X}

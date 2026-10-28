@@ -3,7 +3,15 @@ import type { Counterparty, DocStructureResponse, DocumentData, DocumentsDataRes
 export type TreeRow =
   | { kind: 'company'; key: string; counterparty: Counterparty; children?: TreeRow[] }
   | { kind: 'folder'; key: string; name: string; children: TreeRow[] }
-  | { kind: 'docType'; key: string; name: string; children: TreeRow[] }
+  | {
+    kind: 'docType';
+    key: string;
+    name: string;
+    docType: string;
+    counterparty: Counterparty;
+    docInEntityIds: string[];
+    children: TreeRow[];
+  }
   | { kind: 'document'; key: string; document: DocumentData; level: number };
 
 const counterpartyRank = ({ counterpartyType, counterpartyPart }: Counterparty): number => {
@@ -45,7 +53,17 @@ export const buildTree = (structure: DocStructureResponse, data: DocumentsDataRe
           if (!docs?.length) return [];
           const typeKey = `${key}/${docType.docType}`;
           const children = docs.map((document): TreeRow => ({ kind: 'document', key: `${typeKey}/${document.nkpDocumentId}`, document, level: level + 2 }));
-          return [{ kind: 'docType', key: typeKey, name: docType.docTypeName, children }];
+          // TODO: по ТЗ docInEntityId = docList.id из GET /docList/{entityId}, ручки нет — берём из документов вида
+          const docInEntityIds = [...new Set(docs.map((document) => document.versionData.docInEntityId))];
+          return [{
+            kind: 'docType',
+            key: typeKey,
+            name: docType.docTypeName,
+            docType: docType.docType,
+            counterparty,
+            docInEntityIds,
+            children,
+          }];
         });
         const children = [...docTypes, ...buildFolders(folder.id, level + 1)];
         return children.length ? [{ kind: 'folder', key, name: folder.strName, children }] : [];

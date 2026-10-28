@@ -1,4 +1,5 @@
 import type { DictList, DocTypeDict } from '@/components/Documents/common/types';
+import type { DocTypesDictItem } from '@/components/Documents/TaskDocuments/api';
 import { DOC_TYPES } from './orderDocuments';
 
 const list = (items: [string, string][]): DictList => ({ List: items.map(([code, value]) => ({ code, value })) });
@@ -58,3 +59,39 @@ const DICTS: Record<string, DocTypeDict> = {
 };
 
 export const docTypeDict = (docType: string): DocTypeDict => DICTS[docType] ?? baseDict(docType, '');
+
+export const docTypesDict: DocTypesDictItem[] = [
+  { id: DOC_TYPES.charter, codeEkd: '443', shortName: 'Устав', fullName: 'Устав', multipleInList: false, client: true },
+  {
+    id: DOC_TYPES.balance,
+    codeEkd: '9',
+    shortName: 'Бухгалтерский баланс (Ф1)',
+    fullName: 'Бухгалтерский баланс (Ф1)',
+    multipleInList: false,
+    client: true,
+  },
+  {
+    id: DOC_TYPES.managementReport,
+    codeEkd: '8',
+    shortName: 'Консолидированная управленческая отчетность и расшифровки к ней',
+    fullName: 'Консолид. управленческая отчетность',
+    multipleInList: true,
+    client: true,
+  },
+  {
+    id: DOC_TYPES.decisionDraft,
+    codeEkd: '652',
+    shortName: 'Проект решения',
+    fullName: 'Проект решения',
+    multipleInList: false,
+    client: false,
+  },
+  {
+    id: DOC_TYPES.creditOrder,
+    codeEkd: '1091',
+    shortName: 'Распоряжение на учет (Кредитный договор)',
+    fullName: 'Распоряжение на учет (Кредитный договор)',
+    multipleInList: false,
+    client: false,
+  },
+];
