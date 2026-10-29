@@ -2,7 +2,7 @@ import { Tag, Typography, type TableColumnsType } from 'antd';
 import { DocumentTitle, FileList, FolderIcon } from '../common/cells';
 import type { DocFile, FileInfo } from '../common/types';
 import { downloadFile } from './api';
-import { AddCompanyDocumentButton } from './AddCompanyDocumentButton';
+import { AddCompanyDocumentButton } from './AddCompanyDocument';
 import { AddDocumentButton } from './AddDocumentButton';
 import type { TreeRow } from './buildTree';
 import { DeleteDocTypeButton } from './DeleteDocTypeButton';
