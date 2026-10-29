@@ -57,13 +57,8 @@ export const AddCompanyDocumentModal = ({ entityId, counterparty }: AddCompanyDo
           notification.success({ title: 'Документ добавлен', description: docTypeName });
           modal.hide();
         },
-        onError: (error) => {
-          setFiles((prev) => prev.map((item) => (uploading.has(item.uid) ? { ...item, status: 'idle' } : item)));
-          notification.error({
-            title: 'Не удалось добавить документ',
-            description: `${docTypeName}: ${error.message}`,
-          });
-        },
+        onError: () =>
+          setFiles((prev) => prev.map((item) => (uploading.has(item.uid) ? { ...item, status: 'idle' } : item))),
       },
     );
   };

@@ -27,8 +27,6 @@ export const DeleteDocTypeModal = ({
         notification.success({ title: 'Вид документа исключён', description: name });
         modal.hide();
       },
-      onError: (error) =>
-        notification.error({ title: 'Не удалось исключить вид документа', description: `${name}: ${error.message}` }),
     });
   return (
     <Modal
