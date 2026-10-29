@@ -3,7 +3,7 @@ import { Alert, App, Form, Typography } from 'antd';
 import { Modal, useModal } from '@/components/modals';
 import type { Counterparty } from '../../common/types';
 import { useAddDocument, type DocTypesDictItem } from '../api';
-import { describeError } from './describeError';
+import { describeError } from '../describeError';
 import { DocTypeField } from './DocTypeField';
 import { FilesField } from './FilesField';
 import type { SelectedFile } from './types';

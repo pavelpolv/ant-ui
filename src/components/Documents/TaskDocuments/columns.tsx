@@ -5,7 +5,7 @@ import { downloadFile } from './api';
 import { AddCompanyDocumentButton } from './AddCompanyDocument';
 import { AddDocumentButton } from './AddDocumentButton';
 import type { TreeRow } from './buildTree';
-import { DeleteDocTypeButton } from './DeleteDocTypeButton';
+import { DeleteDocTypeButton } from './DeleteDocType';
 import { FieldSelect } from './FieldSelect';
 import { EDITABLE_COLUMNS, STATUS_COLORS } from './fields';
 
@@ -49,7 +49,12 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
                   counterparty={counterparty}
                   counterpartyCode={counterpartyCode}
                 />
-                <DeleteDocTypeButton name={row.name} docInEntityIds={row.docInEntityIds} />
+                <DeleteDocTypeButton
+                  name={row.name}
+                  counterpartyName={counterpartyName}
+                  docInEntityIds={row.docInEntityIds}
+                  documentsCount={row.children.filter((child) => child.kind === 'document').length}
+                />
               </>
             );
           }
