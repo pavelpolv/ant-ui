@@ -28,7 +28,8 @@ export interface FileCardProps {
 
 export const FileCard = ({ item, disabled, onRemove }: FileCardProps) => {
   const { token } = theme.useToken();
-  const status = item.status === 'error' ? `Ошибка: ${item.error}` : STATUS_TEXT[item.status];
+  const failed = item.status === 'error' || item.status === 'invalid';
+  const status = failed ? `Ошибка: ${item.error}` : STATUS_TEXT[item.status];
   return (
     <Flex
       align="center"
@@ -36,16 +37,16 @@ export const FileCard = ({ item, disabled, onRemove }: FileCardProps) => {
       style={{
         flexShrink: 0,
         padding: `${token.paddingXS}px ${token.paddingSM}px`,
-        border: `1px solid ${item.status === 'error' ? token.colorErrorBorder : token.colorBorderSecondary}`,
+        border: `1px solid ${failed ? token.colorErrorBorder : token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
-        background: item.status === 'error' ? token.colorErrorBg : token.colorBgContainer,
+        background: failed ? token.colorErrorBg : token.colorBgContainer,
       }}
     >
       <FileTypeIcon name={item.file.name} />
       <Flex vertical style={{ flex: 1, minWidth: 0 }}>
         <Typography.Text ellipsis={{ tooltip: item.file.name }}>{item.file.name}</Typography.Text>
         <Typography.Text
-          type={item.status === 'error' ? 'danger' : 'secondary'}
+          type={failed ? 'danger' : 'secondary'}
           ellipsis={{ tooltip: status }}
           style={{ fontSize: token.fontSizeSM }}
         >
@@ -54,7 +55,7 @@ export const FileCard = ({ item, disabled, onRemove }: FileCardProps) => {
       </Flex>
       {item.status === 'uploading' && <LoadingOutlined style={{ color: token.colorPrimary }} />}
       {item.status === 'done' && <CheckCircleFilled style={{ color: token.colorSuccess }} />}
-      {(item.status === 'idle' || item.status === 'error') && (
+      {(item.status === 'idle' || failed) && (
         <Button
           size="small"
           type="text"

@@ -1,10 +1,12 @@
 import { Button, Empty, Flex, Form, Typography, Upload } from 'antd';
 import { PaperClipOutlined } from '@ant-design/icons';
 import { FileCard } from './FileCard';
+import { ALLOWED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB } from './fileValidation';
 import type { SelectedFile } from './types';
 
-// TODO: узнать ограничения количества, размера и типов файлов
+// TODO: узнать ограничение количества файлов
 const FILE_LIST_MAX_HEIGHT = 280;
+const ACCEPT = ALLOWED_FILE_EXTENSIONS.map((extension) => `.${extension}`).join(',');
 
 export interface FilesFieldProps {
   files: SelectedFile[];
@@ -19,6 +21,7 @@ export const FilesField = ({ files, disabled, onAdd, onRemove }: FilesFieldProps
       <Flex align="center" gap={12}>
         <Upload
           multiple
+          accept={ACCEPT}
           showUploadList={false}
           disabled={disabled}
           beforeUpload={(file) => {
@@ -28,7 +31,7 @@ export const FilesField = ({ files, disabled, onAdd, onRemove }: FilesFieldProps
         >
           <Button icon={<PaperClipOutlined />}>Выбрать файлы</Button>
         </Upload>
-        <Typography.Text type="secondary">Можно выбрать несколько файлов.</Typography.Text>
+        <Typography.Text type="secondary">Можно выбрать несколько файлов, до {MAX_FILE_SIZE_MB} МБ каждый.</Typography.Text>
       </Flex>
       {files.length
         ? (

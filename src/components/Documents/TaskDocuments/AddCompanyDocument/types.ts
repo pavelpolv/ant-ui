@@ -1,4 +1,4 @@
-export type FileStatus = 'idle' | 'uploading' | 'done' | 'error';
+export type FileStatus = 'idle' | 'invalid' | 'uploading' | 'done' | 'error';
 
 export interface SelectedFile {
   uid: string;

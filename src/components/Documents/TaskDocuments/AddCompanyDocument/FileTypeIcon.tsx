@@ -8,6 +8,7 @@ import {
   FileWordOutlined,
   FileZipOutlined,
 } from '@ant-design/icons';
+import { getFileExtension } from './fileValidation';
 
 const FILE_ICONS: Record<string, [ComponentType<{ style?: CSSProperties }>, keyof GlobalToken]> = {
   pdf: [FilePdfOutlined, 'colorError'],
@@ -29,7 +30,6 @@ const FILE_ICONS: Record<string, [ComponentType<{ style?: CSSProperties }>, keyo
 
 export const FileTypeIcon = ({ name }: { name: string }) => {
   const { token } = theme.useToken();
-  const extension = name.includes('.') ? name.split('.').pop()!.toLowerCase() : '';
-  const [Icon, color] = FILE_ICONS[extension] ?? [FileOutlined, 'colorTextSecondary'];
+  const [Icon, color] = FILE_ICONS[getFileExtension(name)] ?? [FileOutlined, 'colorTextSecondary'];
   return <Icon style={{ fontSize: 24, color: token[color] as string }} />;
 };

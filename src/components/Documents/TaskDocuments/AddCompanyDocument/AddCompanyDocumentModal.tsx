@@ -6,6 +6,7 @@ import { useAddDocument, type DocTypesDictItem } from '../api';
 import { describeError } from '../describeError';
 import { DocTypeField } from './DocTypeField';
 import { FilesField } from './FilesField';
+import { validateFile } from './fileValidation';
 import type { SelectedFile } from './types';
 
 export interface AddCompanyDocumentModalProps {
@@ -22,10 +23,13 @@ export const AddCompanyDocumentModal = ({ entityId, counterparty }: AddCompanyDo
   const [files, setFiles] = useState<SelectedFile[]>([]);
 
   const docTypeName = docType?.shortName ?? '';
-  const pendingFiles = files.filter(({ status }) => status !== 'done');
+  const pendingFiles = files.filter(({ status }) => status !== 'done' && status !== 'invalid');
+  const hasInvalidFiles = files.some(({ status }) => status === 'invalid');
 
-  const addFile = (file: File & { uid: string }) =>
-    setFiles((prev) => [...prev, { uid: file.uid, file, status: 'idle' }]);
+  const addFile = (file: File & { uid: string }) => {
+    const error = validateFile(file);
+    setFiles((prev) => [...prev, { uid: file.uid, file, status: error ? 'invalid' : 'idle', error }]);
+  };
   const removeFile = (uid: string) => setFiles((prev) => prev.filter((item) => item.uid !== uid));
 
   const handleOk = () => {
@@ -68,7 +72,7 @@ export const AddCompanyDocumentModal = ({ entityId, counterparty }: AddCompanyDo
       title="Добавить документ"
       okText="Добавить"
       cancelText="Отмена"
-      okButtonProps={{ disabled: !docType || !pendingFiles.length }}
+      okButtonProps={{ disabled: !docType || !pendingFiles.length || hasInvalidFiles }}
       confirmLoading={mutation.isPending}
       onOk={handleOk}
       width={640}
