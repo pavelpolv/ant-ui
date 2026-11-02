@@ -6,7 +6,7 @@ import { TaskDocuments } from '@/components';
 const meta = {
   title: 'Components/TaskDocuments',
   component: TaskDocuments,
-  args: { taskId: TASK_ID },
+  args: { taskId: TASK_ID, config: { visible: true, readonly: false } },
   beforeEach() {
     resetTaskList();
   },
@@ -16,6 +16,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Edit: Story = {};
+
+export const Hidden: Story = {
+  args: { config: { visible: false, readonly: false } },
+};
 
 export const DeleteError: Story = {
   beforeEach({ msw }) {

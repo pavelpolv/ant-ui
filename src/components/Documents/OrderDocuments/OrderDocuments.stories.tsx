@@ -6,13 +6,17 @@ import { OrderDocuments } from '@/components';
 const meta = {
   title: 'Components/OrderDocuments',
   component: OrderDocuments,
-  args: { orderId: ORDER_ID },
+  args: { orderId: ORDER_ID, config: { visible: true, readonly: true } },
 } satisfies Meta<typeof OrderDocuments>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const View: Story = {};
+
+export const Hidden: Story = {
+  args: { config: { visible: false, readonly: true } },
+};
 
 export const Empty: Story = {
   beforeEach({ msw }) {

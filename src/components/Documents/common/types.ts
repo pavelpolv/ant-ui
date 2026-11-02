@@ -1,3 +1,8 @@
+export interface DocumentsConfig {
+  visible: boolean;
+  readonly: boolean;
+}
+
 export interface FileInfo {
   id: string;
   name: string;

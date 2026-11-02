@@ -2,6 +2,12 @@
 
 Отображение дерева, документа и файлов — как в [OrderDocuments](../../OrderDocuments/docs/requirements.md).
 
+## Видимость
+
+- Компонент показывается, только если `config.visible === true`. Если `config` или `visible` не пришли, компонент скрыт.
+- Скрытый компонент ничего не выводит и не делает запросов.
+- `config.readonly` пока не учитывается.
+
 ## Статус
 
 `versionData.statusName` — цветная метка (`Tag`) по `versionData.statusCode`. Коды — из справочника `doc_status`:
@@ -84,7 +90,6 @@
 
 ## Ожидаем описания
 
-- [ ] Props: пока только `taskId`, будет что-то ещё.
 - [ ] `entityId` и параметры `POST /credit-doc/taskList/{entityId}`.
 - [ ] Ручка сохранения `POST /credit-doc/new-version/{documentId}`: тело и ответ.
 - [ ] Пустые `code` у `signType` в ответе `/credit-doc/docTypeDict` — сейчас в моке свои коды.

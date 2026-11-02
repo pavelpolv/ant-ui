@@ -2,6 +2,12 @@
 
 Данные, сборка дерева и колонки: [backend-api.md](backend-api.md). Макет: [mockups/scheme.png](mockups/scheme.png).
 
+## Видимость
+
+- Компонент показывается, только если `config.visible === true`. Если `config` или `visible` не пришли, компонент скрыт.
+- Скрытый компонент ничего не выводит и не делает запросов.
+- `config.readonly` пока не учитывается.
+
 ## Отображение
 
 - Tree-table на базе antd `Table`.

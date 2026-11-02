@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { DocumentsTable } from '../common/DocumentsTable';
 import { useDocStructure } from '../common/hooks';
+import type { DocumentsConfig } from '../common/types';
 import { buildTree } from './buildTree';
 import { COLUMNS } from './columns';
 import { useDocumentsData, useOrder } from './api';
@@ -10,9 +11,11 @@ const firstLoadError = (...queries: { data?: unknown; error: Error | null }[]) =
 
 export interface OrderDocumentsProps {
   orderId: string;
+  // TODO: config.readonly пока не учитывается
+  config: DocumentsConfig;
 }
 
-export const OrderDocuments = ({ orderId }: OrderDocumentsProps) => {
+const OrderDocumentsContent = ({ orderId }: { orderId: string }) => {
   const order = useOrder(orderId);
   const structure = useDocStructure();
   const documents = useDocumentsData(order.data ? `${order.data.orderType}~${order.data.orderId}` : '');
@@ -31,3 +34,6 @@ export const OrderDocuments = ({ orderId }: OrderDocumentsProps) => {
     />
   );
 };
+
+export const OrderDocuments = ({ orderId, config }: OrderDocumentsProps) =>
+  config?.visible === true ? <OrderDocumentsContent orderId={orderId} /> : null;

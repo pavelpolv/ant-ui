@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { DocumentsTable } from '../common/DocumentsTable';
 import { useDocStructure } from '../common/hooks';
+import type { DocumentsConfig } from '../common/types';
 import { buildTree } from './buildTree';
 import { createColumns } from './columns';
 import { SCROLL_X } from './fields';
@@ -9,12 +10,12 @@ import { useTaskList } from './api';
 const firstLoadError = (...queries: { data?: unknown; error: Error | null }[]) =>
   queries.find((query) => !query.data && query.error)?.error ?? null;
 
-// TODO: состав props не определён — кроме taskId будет что-то ещё
 export interface TaskDocumentsProps {
   taskId: string;
+  config: DocumentsConfig;
 }
 
-export const TaskDocuments = ({ taskId }: TaskDocumentsProps) => {
+const TaskDocumentsContent = ({ taskId }: { taskId: string }) => {
   const structure = useDocStructure();
   const documents = useTaskList(taskId);
 
@@ -34,3 +35,6 @@ export const TaskDocuments = ({ taskId }: TaskDocumentsProps) => {
     />
   );
 };
+
+export const TaskDocuments = ({ taskId, config }: TaskDocumentsProps) =>
+  config?.visible === true ? <TaskDocumentsContent taskId={taskId} /> : null;
