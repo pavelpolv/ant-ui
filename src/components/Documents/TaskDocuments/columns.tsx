@@ -3,7 +3,6 @@ import { DocumentTitle, FileList, FolderIcon } from '../common/cells';
 import type { DocFile, FileInfo } from '../common/types';
 import { downloadFile } from './api';
 import { AddCompanyDocumentButton } from './AddCompanyDocument';
-import { AddDocumentButton } from './AddDocumentButton';
 import type { TreeRow } from './buildTree';
 import { DeleteDocTypeButton } from './DeleteDocType';
 import { FieldSelect } from './FieldSelect';
@@ -36,28 +35,23 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
             );
           case 'folder':
             return <><FolderIcon /> {row.name}</>;
-          case 'docType': {
-            const { counterparty, counterpartyCode, counterpartyName } = row.counterparty;
+          case 'docType':
             return (
               <>
                 <FolderIcon /> {row.name}{' '}
-                <AddDocumentButton
-                  docTypeId={row.docType}
-                  // TODO: docInEntityId — docList.id из GET /docList, ручки нет — берём первый
-                  docInEntityId={row.docInEntityIds[0]}
-                  counterpartyName={counterpartyName}
-                  counterparty={counterparty}
-                  counterpartyCode={counterpartyCode}
+                <AddCompanyDocumentButton
+                  entityId={entityId}
+                  counterparty={row.counterparty}
+                  presetDocType={{ id: row.docType, shortName: row.name }}
                 />
                 <DeleteDocTypeButton
                   name={row.name}
-                  counterpartyName={counterpartyName}
+                  counterpartyName={row.counterparty.counterpartyName}
                   docInEntityIds={row.docInEntityIds}
                   documentsCount={row.children.filter((child) => child.kind === 'document').length}
                 />
               </>
             );
-          }
           case 'document': {
             const { docName, version } = row.document.versionData;
             return <DocumentTitle name={docName} version={version} level={row.level} />;

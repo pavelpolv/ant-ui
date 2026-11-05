@@ -52,7 +52,7 @@ DELETE /credit-doc/document-in-entity/{docInEntityId}
 - После успешного удаления перезапрашивается `POST /credit-doc/taskList`.
 - [ ] Сверить источник `docInEntityId` и ответ ручки. Сейчас ответ не используется, мок отвечает `204` и убирает документы.
 
-## Добавление документа к компании
+## Добавление документа
 
 ### Виды документов
 
@@ -80,12 +80,12 @@ POST /credit-doc/new-document-to-list
 ```ts
 interface NewDocumentToListRequest {
   entityId: string;          // taskId из props
-  counterparty: string;      // Counterparty строки компании
+  counterparty: string;      // Counterparty строки
   counterpartyCode: string;
   counterpartyName: string;
   counterpartyType: string;
   counterpartyPart: string;
-  docTypeId: string;         // id выбранного вида
+  docTypeId: string;         // id выбранного вида или docType строки вида документа
 }
 ```
 

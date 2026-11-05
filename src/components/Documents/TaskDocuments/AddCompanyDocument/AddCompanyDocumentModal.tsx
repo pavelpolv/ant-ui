@@ -2,23 +2,24 @@ import { useState } from 'react';
 import { Alert, App, Form, Typography } from 'antd';
 import { Modal, useModal } from '@/components/modals';
 import type { Counterparty } from '../../common/types';
-import { useAddDocument, type DocTypesDictItem } from '../api';
+import { useAddDocument } from '../api';
 import { describeError } from '../describeError';
 import { DocTypeField } from './DocTypeField';
 import { FilesField } from './FilesField';
 import { validateFile } from './fileValidation';
-import type { SelectedFile } from './types';
+import type { PresetDocType, SelectedFile } from './types';
 
 export interface AddCompanyDocumentModalProps {
   entityId: string;
   counterparty: Counterparty;
+  presetDocType?: PresetDocType;
 }
 
-export const AddCompanyDocumentModal = ({ entityId, counterparty }: AddCompanyDocumentModalProps) => {
+export const AddCompanyDocumentModal = ({ entityId, counterparty, presetDocType }: AddCompanyDocumentModalProps) => {
   const modal = useModal();
   const { notification } = App.useApp();
   const mutation = useAddDocument();
-  const [docType, setDocType] = useState<DocTypesDictItem>();
+  const [docType, setDocType] = useState<PresetDocType | undefined>(presetDocType);
   const [versionId, setVersionId] = useState<string>();
   const [files, setFiles] = useState<SelectedFile[]>([]);
 
@@ -78,12 +79,13 @@ export const AddCompanyDocumentModal = ({ entityId, counterparty }: AddCompanyDo
       width={640}
     >
       <Form layout="vertical" requiredMark>
-        <Form.Item label="Контрагент">
-          <Typography.Text>{counterparty.counterpartyName}</Typography.Text>
+        <Form.Item style={{ marginTop: 16 }}>
+          <Typography.Text type="secondary">Контрагент:</Typography.Text>{' '}
+          <Typography.Text strong>{counterparty.counterpartyName}</Typography.Text>
         </Form.Item>
         <DocTypeField
           value={docType?.id}
-          disabled={Boolean(versionId) || mutation.isPending}
+          disabled={Boolean(presetDocType) || Boolean(versionId) || mutation.isPending}
           onChange={setDocType}
         />
         <FilesField files={files} disabled={mutation.isPending} onAdd={addFile} onRemove={removeFile} />
