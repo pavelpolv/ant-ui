@@ -17,11 +17,17 @@ const selectFieldValues = (dict: DocTypeDict): Record<ValueField, DictItem[]> =>
   signType: dict.signType?.List ?? [],
 });
 
+const docTypeDictQuery = (docType: string) => ({
+  queryKey: ['docTypeDict', docType],
+  queryFn: () => fetchDocTypeDict(docType),
+  enabled: Boolean(docType),
+  staleTime: Infinity,
+});
+
 export const useFieldValues = (docType: string) =>
-  useQuery({
-    queryKey: ['docTypeDict', docType],
-    queryFn: () => fetchDocTypeDict(docType),
-    select: selectFieldValues,
-    enabled: Boolean(docType),
-    staleTime: Infinity,
-  });
+  useQuery({ ...docTypeDictQuery(docType), select: selectFieldValues });
+
+const selectInitiatorChannels = (dict: DocTypeDict): DictItem[] => dict.initiatorChannel?.List ?? [];
+
+export const useInitiatorChannels = (docType: string) =>
+  useQuery({ ...docTypeDictQuery(docType), select: selectInitiatorChannels });

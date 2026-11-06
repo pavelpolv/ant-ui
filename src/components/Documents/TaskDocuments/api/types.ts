@@ -1,7 +1,7 @@
-import type { Counterparty, ValueField } from '@/components/Documents/common/types';
+import type { Counterparty, DocumentFields } from '@/components/Documents/common/types';
 
 export interface NewVersionRequest {
-  versionData: { id: string } & Partial<Record<ValueField, string>>;
+  versionData: { id: string } & Partial<DocumentFields>;
 }
 
 export interface DocTypesDictItem {
@@ -17,6 +17,11 @@ export interface DocTypesDictItem {
 export interface NewDocumentToListRequest extends Counterparty {
   entityId: string;
   docTypeId: string;
+}
+
+// TODO: ответ POST /file/{versionId} не описан — ожидаем fileId, сверить с ответом бэкенда
+export interface UploadFileResponse {
+  fileId: string;
 }
 
 // TODO: ответ POST /new-document-to-list не описан — ожидаем docVersionId, сверить с ответом бэкенда

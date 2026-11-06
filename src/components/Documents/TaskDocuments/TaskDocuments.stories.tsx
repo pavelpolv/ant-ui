@@ -39,6 +39,12 @@ export const FileUploadError: Story = {
   },
 };
 
+export const DeleteFileError: Story = {
+  beforeEach({ msw }) {
+    msw.use(taskDocumentsHandlers.deleteFileError);
+  },
+};
+
 export const DocTypesDictError: Story = {
   beforeEach({ msw }) {
     msw.use(taskDocumentsHandlers.docTypesDictError);

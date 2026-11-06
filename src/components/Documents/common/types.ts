@@ -142,3 +142,20 @@ export interface DocTypeDict {
   updateAt: string | null;
   updateBy: string | null;
 }
+
+export type DocumentFields = Pick<
+  VersionData,
+  | 'docName'
+  | 'docNumber'
+  | 'docDate'
+  | 'validityPeriod'
+  | 'initiatorChannel'
+  | 'assuranceLevel'
+  | 'provisionForm'
+  | 'signType'
+  | 'submittingOriginalDeadline'
+  | 'storageLocation'
+  | 'usingCopy'
+  | 'suspensiveProvision'
+  | 'comment'
+>;

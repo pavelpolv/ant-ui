@@ -10,6 +10,7 @@ const DELETE_DOC_IN_ENTITY_URL = '/credit-doc/document-in-entity/:docInEntityId'
 const DOC_TYPES_DICT_URL = '/credit-doc/docTypesDict';
 const NEW_DOCUMENT_URL = '/credit-doc/new-document-to-list';
 const UPLOAD_FILE_URL = '/credit-doc/file/:versionId';
+const DELETE_FILE_URL = '/credit-doc/file/:versionId/:fileId';
 const CURRENT_USER = 'Текущий пользователь';
 
 export const TASK_ID = 'task-1';
@@ -112,6 +113,19 @@ export const taskDocumentsHandlers = {
     if (!file) return HttpResponse.json({ message: 'Файл не передан' }, { status: 400 });
     return saveUploadedFile(params.versionId, file);
   }),
+  // TODO: ответ DELETE /file/{versionId}/{fileId} не описан — мок отвечает 204
+  deleteFile: http.delete<{ versionId: string; fileId: string }>(DELETE_FILE_URL, async ({ params }) => {
+    await delay(400);
+    const document = taskList.docLists
+      .flatMap((list) => list.documentData)
+      .find((item) => item.versionData.nkpDocId === params.versionId);
+    const files = document?.versionData.files;
+    if (!files?.some((item) => item.nkpFileId === params.fileId)) {
+      return HttpResponse.json({ message: 'Файл не найден' }, { status: 404 });
+    }
+    document!.versionData.files = files.filter((item) => item.nkpFileId !== params.fileId);
+    return new HttpResponse(null, { status: 204 });
+  }),
 
   taskListEmpty: http.post(TASK_LIST_URL, () => HttpResponse.json({ docLists: [] })),
   taskListError: http.post(TASK_LIST_URL, () =>
@@ -127,6 +141,10 @@ export const taskDocumentsHandlers = {
   deleteDocInEntityError: http.delete(DELETE_DOC_IN_ENTITY_URL, async () => {
     await delay(400);
     return HttpResponse.json({ message: 'Внутренняя ошибка сервера' }, { status: 500 });
+  }),
+  deleteFileError: http.delete(DELETE_FILE_URL, async () => {
+    await delay(400);
+    return serverError();
   }),
   docTypesDictError: http.get(DOC_TYPES_DICT_URL, async () => {
     await delay(600);
@@ -155,4 +173,5 @@ export const taskDocumentsDefaultHandlers = [
   taskDocumentsHandlers.docTypesDict,
   taskDocumentsHandlers.newDocumentToList,
   taskDocumentsHandlers.uploadFile,
+  taskDocumentsHandlers.deleteFile,
 ];

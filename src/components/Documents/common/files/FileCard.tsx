@@ -5,7 +5,7 @@ import type { FileStatus, SelectedFile } from './types';
 
 const SIZE_UNITS = ['Б', 'КБ', 'МБ', 'ГБ'];
 
-const formatSize = (bytes: number): string => {
+export const formatSize = (bytes: number): string => {
   let value = bytes;
   let unit = 0;
   while (value >= 1024 && unit < SIZE_UNITS.length - 1) {
@@ -18,12 +18,13 @@ const formatSize = (bytes: number): string => {
 const STATUS_TEXT: Partial<Record<FileStatus, string>> = {
   uploading: 'Загружается…',
   done: 'Загружен',
+  deleting: 'Удаляется…',
 };
 
 export interface FileCardProps {
   item: SelectedFile;
   disabled: boolean;
-  onRemove: () => void;
+  onRemove?: () => void;
 }
 
 export const FileCard = ({ item, disabled, onRemove }: FileCardProps) => {
@@ -53,9 +54,9 @@ export const FileCard = ({ item, disabled, onRemove }: FileCardProps) => {
           {formatSize(item.file.size)}{status && ` · ${status}`}
         </Typography.Text>
       </Flex>
-      {item.status === 'uploading' && <LoadingOutlined style={{ color: token.colorPrimary }} />}
-      {item.status === 'done' && <CheckCircleFilled style={{ color: token.colorSuccess }} />}
-      {(item.status === 'idle' || failed) && (
+      {(item.status === 'uploading' || item.status === 'deleting') && <LoadingOutlined style={{ color: token.colorPrimary }} />}
+      {item.status === 'done' && !onRemove && <CheckCircleFilled style={{ color: token.colorSuccess }} />}
+      {onRemove && (
         <Button
           size="small"
           type="text"

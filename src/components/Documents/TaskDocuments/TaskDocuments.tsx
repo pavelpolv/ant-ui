@@ -1,11 +1,17 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useModals } from '@/components/modals';
 import { DocumentsTable } from '../common/DocumentsTable';
 import { useDocStructure } from '../common/hooks';
 import type { DocumentsConfig } from '../common/types';
+import { AddCompanyDocumentModal } from './AddCompanyDocument/AddCompanyDocumentModal';
 import { buildTree } from './buildTree';
 import { createColumns } from './columns';
+import { DeleteDocTypeModal } from './DeleteDocType/DeleteDocTypeModal';
 import { SCROLL_X } from './fields';
+import { TaskDocumentModal } from './TaskDocumentModal';
 import { useTaskList } from './api';
+
+const TASK_MODALS = [TaskDocumentModal, AddCompanyDocumentModal, DeleteDocTypeModal];
 
 const firstLoadError = (...queries: { data?: unknown; error: Error | null }[]) =>
   queries.find((query) => !query.data && query.error)?.error ?? null;
@@ -16,6 +22,8 @@ export interface TaskDocumentsProps {
 }
 
 const TaskDocumentsContent = ({ taskId }: { taskId: string }) => {
+  const modals = useModals();
+  useEffect(() => () => TASK_MODALS.forEach((modal) => modals.hide(modal)), [modals]);
   const structure = useDocStructure();
   const documents = useTaskList(taskId);
 

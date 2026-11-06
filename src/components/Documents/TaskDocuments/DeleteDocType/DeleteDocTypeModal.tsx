@@ -1,8 +1,8 @@
 import { Alert, App, Flex, theme, Typography } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Modal, useModal } from '@/components/modals';
+import { describeError } from '../../common/describeError';
 import { useDeleteDocType } from '../api';
-import { describeError } from '../describeError';
 
 export interface DeleteDocTypeModalProps {
   name: string;

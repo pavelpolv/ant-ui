@@ -22,10 +22,3 @@ export const VALUE_COLUMNS: ValueColumn[] = [
     width: 200,
   },
 ];
-
-export const STATUS_COLORS: Record<string, string> = {
-  NewDoc: 'blue',
-  InProgress: 'gold',
-  InApprove: 'purple',
-  Actual: 'green',
-};

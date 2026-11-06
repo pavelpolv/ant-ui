@@ -1,10 +1,9 @@
-import type { ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import { App, Flex, Popover, Space, Tag, theme, Tooltip, Typography } from 'antd';
 import { FileTextOutlined, FolderFilled, PaperClipOutlined } from '@ant-design/icons';
 import { useModals } from '@/components/modals';
-import { DocumentModal } from './DocumentModal';
 import { useDownloadFile } from './hooks';
-import type { FileInfo } from './types';
+import type { DocumentData, FileInfo, VersionData } from './types';
 
 export const FolderIcon = () => {
   const { token } = theme.useToken();
@@ -14,15 +13,27 @@ export const FolderIcon = () => {
 export const TREE_INDENT = 15;
 const EXPAND_ICON_SPACE = 25;
 
+const STATUS_COLORS: Record<string, string> = {
+  NewDoc: 'blue',
+  InProgress: 'gold',
+  InApprove: 'purple',
+  Actual: 'green',
+};
+
+export const StatusTag = ({ versionData }: { versionData: VersionData }) => (
+  <Tag color={STATUS_COLORS[versionData.statusCode]}>{versionData.statusName}</Tag>
+);
+
 export interface DocumentTitleProps {
-  name: string;
-  version: number;
+  document: DocumentData;
   level: number;
+  modal: ComponentType<{ document: DocumentData }>;
 }
 
-export const DocumentTitle = ({ name, version, level }: DocumentTitleProps) => {
+export const DocumentTitle = ({ document, level, modal }: DocumentTitleProps) => {
   const modals = useModals();
   const { token } = theme.useToken();
+  const { docName: name, version } = document.versionData;
   return (
     <Flex
       component="span"
@@ -32,7 +43,7 @@ export const DocumentTitle = ({ name, version, level }: DocumentTitleProps) => {
     >
       <FileTextOutlined style={{ color: token.colorPrimary }} />
       <Tooltip title={name}>
-        <Typography.Link ellipsis style={{ minWidth: 0 }} onClick={() => modals.show(DocumentModal, { title: name })}>
+        <Typography.Link ellipsis style={{ minWidth: 0 }} onClick={() => modals.show(modal, { document })}>
           {name}
         </Typography.Link>
       </Tooltip>

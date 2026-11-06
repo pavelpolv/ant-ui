@@ -13,11 +13,4 @@ export const EDITABLE_COLUMNS: EditableColumn[] = [
   { field: 'signType', title: <>Способ<br />подписания</>, width: 200 },
 ];
 
-export const STATUS_COLORS: Record<string, string> = {
-  NewDoc: 'blue',
-  InProgress: 'gold',
-  InApprove: 'purple',
-  Actual: 'green',
-};
-
 export const SCROLL_X = 1450;

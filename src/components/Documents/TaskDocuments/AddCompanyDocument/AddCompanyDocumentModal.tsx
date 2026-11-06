@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Alert, App, Form, Typography } from 'antd';
 import { Modal, useModal } from '@/components/modals';
+import { describeError } from '../../common/describeError';
+import { type SelectedFile, validateFile } from '../../common/files';
 import type { Counterparty } from '../../common/types';
 import { useAddDocument } from '../api';
-import { describeError } from '../describeError';
 import { DocTypeField } from './DocTypeField';
 import { FilesField } from './FilesField';
-import { validateFile } from './fileValidation';
-import type { PresetDocType, SelectedFile } from './types';
+import type { PresetDocType } from './types';
 
 export interface AddCompanyDocumentModalProps {
   entityId: string;

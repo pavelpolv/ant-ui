@@ -1,12 +1,13 @@
-import { Tag, Typography, type TableColumnsType } from 'antd';
-import { DocumentTitle, FileList, FolderIcon } from '../common/cells';
+import { Typography, type TableColumnsType } from 'antd';
+import { DocumentTitle, FileList, FolderIcon, StatusTag } from '../common/cells';
 import type { DocFile, FileInfo } from '../common/types';
 import { downloadFile } from './api';
 import { AddCompanyDocumentButton } from './AddCompanyDocument';
 import type { TreeRow } from './buildTree';
+import { TaskDocumentModal } from './TaskDocumentModal';
 import { DeleteDocTypeButton } from './DeleteDocType';
 import { FieldSelect } from './FieldSelect';
-import { EDITABLE_COLUMNS, STATUS_COLORS } from './fields';
+import { EDITABLE_COLUMNS } from './fields';
 
 const toFileInfo = (file: DocFile): FileInfo => ({
   id: file.nkpFileId,
@@ -53,8 +54,7 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
               </>
             );
           case 'document': {
-            const { docName, version } = row.document.versionData;
-            return <DocumentTitle name={docName} version={version} level={row.level} />;
+            return <DocumentTitle document={row.document} level={row.level} modal={TaskDocumentModal} />;
           }
         }
       },
@@ -76,8 +76,7 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
       onCell: groupSpan,
       render: (_, row) => {
         if (row.kind !== 'document') return null;
-        const { statusCode, statusName } = row.document.versionData;
-        return <Tag color={STATUS_COLORS[statusCode]}>{statusName}</Tag>;
+        return <StatusTag versionData={row.document.versionData} />;
       },
     },
     ...EDITABLE_COLUMNS.map(({ field, title, width }) => ({

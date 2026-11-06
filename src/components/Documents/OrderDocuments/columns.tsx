@@ -1,10 +1,11 @@
-import { Flex, Tag, Typography, type TableColumnsType } from 'antd';
-import { DocumentTitle, FileList, FolderIcon } from '../common/cells';
+import { Flex, Typography, type TableColumnsType } from 'antd';
+import { DocumentTitle, FileList, FolderIcon, StatusTag } from '../common/cells';
 import { FieldValue } from '../common/fields';
 import type { DocFile, FileInfo } from '../common/types';
 import { downloadFile } from './api';
 import type { TreeRow } from './buildTree';
-import { STATUS_COLORS, VALUE_COLUMNS } from './fields';
+import { OrderDocumentModal } from './OrderDocumentModal';
+import { VALUE_COLUMNS } from './fields';
 
 const toFileInfo = (file: DocFile): FileInfo => ({
   id: file.nkpFileId,
@@ -29,8 +30,7 @@ export const COLUMNS: TableColumnsType<TreeRow> = [
         case 'docType':
           return <><FolderIcon /> {row.name}</>;
         case 'document': {
-          const { docName, version } = row.document.versionData;
-          return <DocumentTitle name={docName} version={version} level={row.level} />;
+          return <DocumentTitle document={row.document} level={row.level} modal={OrderDocumentModal} />;
         }
       }
     },
@@ -52,8 +52,7 @@ export const COLUMNS: TableColumnsType<TreeRow> = [
     onCell: groupSpan,
     render: (_, row) => {
       if (row.kind !== 'document') return null;
-      const { statusCode, statusName } = row.document.versionData;
-      return <Tag color={STATUS_COLORS[statusCode]}>{statusName}</Tag>;
+      return <StatusTag versionData={row.document.versionData} />;
     },
   },
   ...VALUE_COLUMNS.map(({ key, title, fields, width }) => ({
