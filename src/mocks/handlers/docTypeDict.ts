@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 import { docTypeDict } from '../data/docTypeDict';
 
-const DOC_TYPE_DICT_URL = '/credit-doc/docTypeDict/:docType';
+const DOC_TYPE_DICT_URL = '/proxy/api/credit-doc/docTypeDict/:docType';
 
 export const docTypeDictHandlers = {
   docTypeDict: http.get<{ docType: string }>(DOC_TYPE_DICT_URL, async ({ params }) => {

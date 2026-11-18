@@ -5,7 +5,7 @@ import type {
   DocumentsDataResponse,
   VersionData,
 } from '@/components/Documents/common/types';
-import type { OrderResponse } from '@/components/Documents/OrderDocuments/api';
+import type { OrderResponse } from '@/components/Documents/common/types';
 
 export const ORDER_ID = 'VYjXuo6HUEwS1e8lR0n9t';
 

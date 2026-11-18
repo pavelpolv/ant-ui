@@ -15,11 +15,11 @@ import type { DocumentData, ValueField } from '@/components/Documents/common/typ
 
 export const TASK_DOCUMENTS_KEY = 'taskDocuments';
 
-export const useTaskList = (taskId: string) =>
+export const useTaskList = (entityId: string, taskCode: string) =>
   useQuery({
-    queryKey: [TASK_DOCUMENTS_KEY, 'taskList', taskId],
-    queryFn: () => fetchTaskList(taskId),
-    enabled: Boolean(taskId),
+    queryKey: [TASK_DOCUMENTS_KEY, 'taskList', entityId, taskCode],
+    queryFn: () => fetchTaskList(entityId, taskCode),
+    enabled: Boolean(entityId) && Boolean(taskCode),
   });
 
 export const useSaveField = (document: DocumentData, field: ValueField) => {

@@ -8,7 +8,8 @@
 GET /credit-doc/order/{orderId}
 ```
 
-`orderId` приходит в компонент через props. Из ответа нужны `order.orderType` и `order.orderId` — из них собирается `entityId` (см. «Параметры»).
+`orderId` приходит в компонент через props. Из ответа нужны `order.orderType` и `order.orderId` — из них собирается
+`entityId` (см. «Параметры»). Запрос и хук общие с TaskDocuments: `fetchOrder` и `useEntityId` — в `common/`.
 
 ```ts
 interface OrderResponse {
@@ -246,7 +247,10 @@ interface DocTypeDict {
 
 ## Параметры
 
-- В компонент через props приходит `orderId`. `entityId` для `/documents-data/{entityId}` собирается как `{order.orderType}~{order.orderId}` из ответа `GET /credit-doc/order/{orderId}`, например `setting-limit~VYjXuo6HUEwS1e8lR0n9t`.
+- В компонент через props приходит `orderId`. `entityId` для `/documents-data/{entityId}` собирается как
+  `{order.orderType}~{order.orderId}` из ответа `GET /credit-doc/order/{orderId}`, например
+  `setting-limit~VYjXuo6HUEwS1e8lR0n9t`. Это делает общий хук `useEntityId(orderId)` (`common/hooks.ts`); его же
+  использует TaskDocuments для `/taskList`.
 - Сначала запрашивается заявка, затем `/documents-data`. `/doc-structure` запрашивается параллельно с заявкой. Ошибка любой из трёх ручек — экран ошибки.
 
 ## Форматы

@@ -1,20 +1,23 @@
 # TaskDocuments — API бэкенда
 
 Структура каталогов (`GET /credit-doc/doc-structure`) и сборка дерева — как в [OrderDocuments](../../OrderDocuments/docs/backend-api.md).
-Заявка (`GET /credit-doc/order/{orderId}`) не запрашивается. Код компонента от OrderDocuments не зависит. Общие с OrderDocuments
-типы, запросы и хуки (`/doc-structure`, `/credit-doc/docTypeDict`) — в `common/`; сборка дерева и колонки — свои копии
-в `TaskDocuments/`.
+Заявка (`GET /credit-doc/order/{orderId}`) запрашивается — из неё собирается `entityId` для `/taskList` (см. «Параметры»).
+Код компонента от OrderDocuments не зависит. Общие с OrderDocuments типы, запросы и хуки (`/doc-structure`,
+`/credit-doc/docTypeDict`, заявка) — в `common/`; сборка дерева и колонки — свои копии в `TaskDocuments/`.
 
 ## Данные документов
 
 ```
-POST /credit-doc/taskList/{entityId}
+POST /credit-doc/taskList/{entityId}?taskCode={definitionKey}
 ```
 
 Вместо `GET /credit-doc/documents-data/{entityId}`. Ответ — как у `/documents-data` (`docLists`), плюс поле
 `versionData.docInEntityId: string` (используется для исключения вида документа).
 
-- [ ] Откуда берётся `entityId` и параметры тела запроса — не описано. Сейчас в URL подставляется `taskId` из props, тело `{}`.
+- `entityId` — `{order.orderType}~{order.orderId}` из `GET /credit-doc/order/{orderId}`, например
+  `setting-limit~VYjXuo6HUEwS1e8lR0n9t`.
+- `taskCode` — `definitionKey` из props.
+- Тело — `{}`; других параметров, кроме `taskCode`, пока нет.
 
 ## Варианты полей
 
@@ -90,6 +93,7 @@ interface NewDocumentToListRequest {
 ```
 
 - `counterpartyCrmId` из ТЗ не отправляется — в `Counterparty` его нет.
+- `entityId` здесь — `taskId` из props (см. «Параметры»), а не `entityId` из заявки.
 - Ответ — `{ docVersionId: string }`, `201`.
 - [ ] Сверить ответ и префикс `/credit-doc`. Мок добавляет документ со статусом «Новый» в `/taskList`.
 
@@ -116,3 +120,14 @@ Content-Type: multipart/form-data; file=<binary>
 | Способ подписания | 200 | `versionData.signType` | `{ id, signType }` |
 
 Горизонтальная прокрутка — если таблица уже 1450px.
+
+## Параметры
+
+- В компонент через props приходят `taskId`, `orderId`, `definitionKey` и `config`.
+- `entityId` для `/taskList/{entityId}` собирается из заявки: `{order.orderType}~{order.orderId}`. Формирование —
+  общий хук `useEntityId(orderId)` в `common/hooks.ts`; его же использует OrderDocuments для `/documents-data`.
+- `taskCode` в query — `definitionKey` из props.
+- Сначала запрашивается заявка, затем `/taskList`. `/doc-structure` запрашивается параллельно с заявкой. Ошибка любой
+  из трёх ручек — экран ошибки.
+- `taskId` остаётся в props для `POST /credit-doc/new-document-to-list` (поле `entityId`); он же передаётся
+  в колонки для кнопок добавления документа.

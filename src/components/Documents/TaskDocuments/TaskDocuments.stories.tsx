@@ -1,12 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { docTypeDictHandlers, resetTaskList, taskDocumentsHandlers } from '@/mocks/handlers';
-import { TASK_ID } from '@/mocks/handlers/taskDocuments';
+import { DEFINITION_KEY, TASK_ID } from '@/mocks/handlers/taskDocuments';
+import { ORDER_ID } from '@/mocks/data/orderDocuments';
 import { TaskDocuments } from '@/components';
 
 const meta = {
   title: 'Components/TaskDocuments',
   component: TaskDocuments,
-  args: { taskId: TASK_ID, config: { visible: true, readonly: false } },
+  args: {
+    taskId: TASK_ID,
+    orderId: ORDER_ID,
+    definitionKey: DEFINITION_KEY,
+    config: { visible: true, readonly: false },
+  },
   beforeEach() {
     resetTaskList();
   },

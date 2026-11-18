@@ -172,13 +172,14 @@ return row.kind === 'document' ? (
 ```
 src/components/Documents/
   index.ts                      — публичный экспорт: только компоненты (export * from './OrderDocuments')
-  common/                       — общий UI, наружу не экспортируется и не знает о ручках
+  common/                       — общий UI, наружу не экспортируется и не импортирует подпапки компонентов
     DocumentsTable.tsx          — Table дерева: загрузка, ошибка, пусто, раскладка колонок
     DocumentModal.tsx           — форма «Документ»
     cells.tsx                   — ячейки: папка, документ, список файлов, значение с иконкой
-    hooks.ts                    — общие хуки (состояние скачивания)
+    hooks.ts                    — общие хуки: скачивание, entityId из заявки
+    requests.ts                 — общие запросы: /doc-structure, /docTypeDict, заявка
     saveFile.ts                 — отдать Blob браузеру как файл
-    types.ts                    — простые типы для общих ячеек (FileInfo)
+    types.ts                    — типы ответов бэкенда и общих ячеек
   OrderDocuments/               — документы заявки (просмотр)
     OrderDocuments.tsx          — компонент: запросы → строки → DocumentsTable
     OrderDocuments.stories.tsx  — сторис (все состояния: данные, пусто, загрузка, ошибки)

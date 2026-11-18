@@ -2,6 +2,15 @@
 
 Отображение дерева, документа и файлов — как в [OrderDocuments](../../OrderDocuments/docs/requirements.md).
 
+## Входные параметры
+
+| Prop | Назначение |
+|---|---|
+| `taskId` | id задачи; уходит в `new-document-to-list` как `entityId` |
+| `orderId` | заявка, из неё собирается `entityId` для `/taskList` |
+| `definitionKey` | `taskCode` в запросе `/taskList` |
+| `config` | `visible` — показывать ли компонент; `readonly` пока не учитывается |
+
 ## Видимость
 
 - Компонент показывается, только если `config.visible === true`. Если `config` или `visible` не пришли, компонент скрыт.
@@ -98,7 +107,6 @@
 
 ## Ожидаем описания
 
-- [ ] `entityId` и параметры `POST /credit-doc/taskList/{entityId}`.
 - [ ] Ручка сохранения `POST /credit-doc/new-version/{documentId}`: тело, ответ и формат дат.
 - [ ] Ответы `POST /credit-doc/file/{versionId}` (сейчас ожидаем `fileId`) и `DELETE /credit-doc/file/{versionId}/{fileId}`.
 - [ ] Пустые `code` у `signType` в ответе `/credit-doc/docTypeDict` — сейчас в моке свои коды.

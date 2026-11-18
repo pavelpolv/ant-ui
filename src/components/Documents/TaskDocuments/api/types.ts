@@ -15,7 +15,7 @@ export interface DocTypesDictItem {
 
 // TODO: counterpartyCrmId из ТЗ не отправляется — в Counterparty его нет, уточнить источник
 export interface NewDocumentToListRequest extends Counterparty {
-  entityId: string;
+  entityId: string; // taskId из props, а не entityId из заявки (см. docs/backend-api.md)
   docTypeId: string;
 }
 

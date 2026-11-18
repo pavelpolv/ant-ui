@@ -4,16 +4,17 @@ import type { NewDocumentToListRequest, NewVersionRequest } from '@/components/D
 import { docTypesDict } from '../data/docTypeDict';
 import { doc, documentsData, file as docFile } from '../data/orderDocuments';
 
-const TASK_LIST_URL = '/credit-doc/taskList/:taskId';
-const NEW_VERSION_URL = '/credit-doc/new-version/:documentId';
-const DELETE_DOC_IN_ENTITY_URL = '/credit-doc/document-in-entity/:docInEntityId';
-const DOC_TYPES_DICT_URL = '/credit-doc/docTypesDict';
-const NEW_DOCUMENT_URL = '/credit-doc/new-document-to-list';
-const UPLOAD_FILE_URL = '/credit-doc/file/:versionId';
-const DELETE_FILE_URL = '/credit-doc/file/:versionId/:fileId';
+const TASK_LIST_URL = '/proxy/api/credit-doc/taskList/:entityId';
+const NEW_VERSION_URL = '/proxy/api/credit-doc/new-version/:documentId';
+const DELETE_DOC_IN_ENTITY_URL = '/proxy/api/credit-doc/document-in-entity/:docInEntityId';
+const DOC_TYPES_DICT_URL = '/proxy/api/credit-doc/docTypesDict';
+const NEW_DOCUMENT_URL = '/proxy/api/credit-doc/new-document-to-list';
+const UPLOAD_FILE_URL = '/proxy/api/credit-doc/file/:versionId';
+const DELETE_FILE_URL = '/proxy/api/credit-doc/file/:versionId/:fileId';
 const CURRENT_USER = 'Текущий пользователь';
 
 export const TASK_ID = 'task-1';
+export const DEFINITION_KEY = 'documents';
 
 const initialTaskList = (): DocumentsDataResponse => ({
   docLists: documentsData.docLists.map(({ counterparty, documentData }) => ({
@@ -59,8 +60,11 @@ const saveUploadedFile = (versionId: string, file: File) => {
 };
 
 export const taskDocumentsHandlers = {
-  taskList: http.post(TASK_LIST_URL, async () => {
+  taskList: http.post(TASK_LIST_URL, async ({ request }) => {
     await delay(500);
+    if (!new URL(request.url).searchParams.get('taskCode')) {
+      return HttpResponse.json({ message: 'Не передан taskCode' }, { status: 400 });
+    }
     return HttpResponse.json(taskList);
   }),
   // TODO: ответ ручки сохранения не описан — мок возвращает пустой объект и поднимает версию
