@@ -5,7 +5,7 @@ import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import cssnanoPlugin from 'cssnano';
 
-let result = await esbuild.build({
+const result = await esbuild.build({
   entryPoints: ['./src/components/index.ts'],
   outdir: 'dist',
   outbase: 'src',
@@ -21,9 +21,7 @@ let result = await esbuild.build({
     }),
     sassPlugin({
       transform: postcssModules(
-        {
-          // generateScopedName: '[path][local]'
-        },
+        {},
         [cssnanoPlugin({ preset: 'default' })],
       ),
       type: 'style',
@@ -37,5 +35,4 @@ let result = await esbuild.build({
   metafile: true,
 });
 
-// SAVE METADATA
 fs.writeFileSync('dist/meta.json', JSON.stringify(result.metafile));

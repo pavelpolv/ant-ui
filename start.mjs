@@ -23,9 +23,7 @@ const context = await esbuild.context({
     }),
     sassPlugin({
       transform: postcssModules(
-        {
-          // generateScopedName: '[path][local]'
-        },
+        {},
         [
           cssnanoPlugin({
             preset: 'default',

@@ -1,6 +1,13 @@
 import { usersHandlers } from './users';
+import { docTypeDictDefaultHandlers, docTypeDictHandlers } from './docTypeDict';
+import { orderDocumentsDefaultHandlers, orderDocumentsHandlers } from './orderDocuments';
+import { resetTaskList, taskDocumentsDefaultHandlers, taskDocumentsHandlers } from './taskDocuments';
 
-/** Хендлеры по умолчанию для всех историй. */
-export const defaultHandlers = [usersHandlers.success];
+export const defaultHandlers = [
+  usersHandlers.success,
+  ...docTypeDictDefaultHandlers,
+  ...orderDocumentsDefaultHandlers,
+  ...taskDocumentsDefaultHandlers,
+];
 
-export { usersHandlers };
+export { usersHandlers, docTypeDictHandlers, orderDocumentsHandlers, taskDocumentsHandlers, resetTaskList };

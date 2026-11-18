@@ -16,6 +16,8 @@
 | `npm run storybook` | Storybook на `http://localhost:6010` |
 | `npm run build-storybook` | статическая сборка Storybook |
 | `npm run typecheck` | проверка типов |
+| `npm run lint` | проверка ESLint (стиль — [docs/code-style.md](docs/code-style.md)) |
+| `npm run lint:fix` | ESLint с автоисправлением |
 
 ## Подключение в микрофронте
 
@@ -67,7 +69,7 @@ createRoot(el).render(
 );
 ```
 
-- `UiProvider` — тема и локаль (ru) компонентов.
+- `UiProvider` — тема, локаль (ru) и уведомления (`App` из antd) компонентов.
 - `modals.Provider` — рендерит модалки этого микрофронта внутри его дерева, поэтому в модалках доступны его `QueryClient`, роутер и прочие контексты.
 
 ## Правила

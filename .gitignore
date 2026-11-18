@@ -4,3 +4,7 @@ storybook-static
 *.log
 .idea
 .DS_Store
+
+# скриншоты ТЗ и макеты компонентов
+src/components/**/docs/api/
+src/components/**/docs/mockups/

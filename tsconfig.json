@@ -11,7 +11,8 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["node", "msw-storybook-addon/csf3"]
+    "types": ["node", "msw-storybook-addon/csf3"],
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src", ".storybook"]
 }
