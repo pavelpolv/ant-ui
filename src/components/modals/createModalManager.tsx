@@ -112,7 +112,7 @@ export const createModalManager = (): ModalManager => {
 export const useModals = (): ModalManager => {
   const manager = useContext(ManagerContext);
   if (!manager) {
-    throw new Error('useModals: не найден Provider. Оберните дерево в modals.Provider из createModalManager().');
+    throw new Error('useModals: не найден Provider. Оберните дерево в <UiProvider> из ant-ui.');
   }
   return manager;
 };

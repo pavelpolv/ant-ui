@@ -103,7 +103,7 @@ return row.kind === 'document' ? (
   ```tsx
   export const FileLink = ({ file }: { file: DocFile }) => { … };
   ```
-  Короткие компоненты — сразу выражением: `export const UiProvider = ({ children }: UiProviderProps) => (<ConfigProvider …>);`.
+  Короткие компоненты — сразу выражением: `export const FieldSkeleton = () => (<Skeleton.Input … />);`.
 - Новый JSX-трансформ: `import React` не нужен.
 - Фрагменты — `<>…</>`, не `<Fragment>`. Бесполезные фрагменты (вокруг одного элемента) запрещены.
 - Компонент без детей — самозакрывающийся: `<FileOutlined />`.

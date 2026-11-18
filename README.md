@@ -51,31 +51,44 @@ external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'ant-u
 
 ### 3. Корень микрофронта
 
+Один провайдер на всё — тема и локаль, `QueryClient` и менеджер модалок:
+
 ```tsx
 import { createRoot } from 'react-dom/client';
-import { QueryClient, QueryClientProvider, UiProvider, createModalManager } from 'ant-ui';
-
-export const modals = createModalManager(); // свой экземпляр на микрофронт
-const queryClient = new QueryClient(); // свой кеш на микрофронт
+import { UiProvider } from 'ant-ui';
 
 createRoot(el).render(
-  <QueryClientProvider client={queryClient}>
-    <UiProvider>
-      <modals.Provider>
-        <App />
-      </modals.Provider>
-    </UiProvider>
-  </QueryClientProvider>,
+  <UiProvider>
+    <App />
+  </UiProvider>,
+);
+```
+
+`UiProvider` сам создаёт `QueryClient` и менеджер модалок — по одному на микрофронт. Поэтому `QueryClientProvider`, `ConfigProvider` и `modals.Provider` в микрофронте больше не нужны.
+
+Если нужен свой `QueryClient` (например, с общими `defaultOptions`) или модалки открываются вне React, передайте готовые экземпляры пропсами:
+
+```tsx
+import { QueryClient, UiProvider, createModalManager } from 'ant-ui';
+
+export const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000 } } });
+export const modals = createModalManager(); // экземпляр микрофронта
+
+createRoot(el).render(
+  <UiProvider queryClient={queryClient} modals={modals}>
+    <App />
+  </UiProvider>,
 );
 ```
 
 - `UiProvider` — тема, локаль (ru) и уведомления (`App` из antd) компонентов.
-- `modals.Provider` — рендерит модалки этого микрофронта внутри его дерева, поэтому в модалках доступны его `QueryClient`, роутер и прочие контексты.
+- `UiProvider` держит переданные `queryClient` и `modals` с момента монтирования. Второй `UiProvider` в том же микрофронте создаст второй `QueryClient` и второй менеджер модалок.
+- Модалки рендерятся внутри дерева микрофронта (через `modals.Provider`), поэтому в них доступны его `QueryClient`, роутер и прочие контексты.
 
 ## Правила
 
 1. **react-query импортировать только из `ant-ui`**: `import { useQuery } from 'ant-ui'`.
-   Прямой `import '@tanstack/react-query'` даст вторую копию модуля, и хуки ant-ui не увидят ваш `QueryClientProvider` (ошибка *No QueryClient set*).
+   Прямой `import '@tanstack/react-query'` даст вторую копию модуля: хук будет искать клиент в своей копии и выдаст ошибку *No QueryClient set* (клиент создаёт `UiProvider`).
 2. **antd в микрофронтах не использовать.** Нужен компонент — он добавляется в ant-ui.
 3. **`ant-ui` никогда не зашивать в бандл** — ни в микрофронт, ни в промежуточную библиотеку. Иначе появится вторая копия antd, react-query и модалок.
 
@@ -135,7 +148,7 @@ const ConfirmModal = ({ text }: { text: string }) => {
 const modals = useModals();
 const ok = await modals.show(ConfirmModal, { text: 'Удалить запись?' });
 
-// вне React — через экземпляр микрофронта
+// вне React — через экземпляр, переданный в <UiProvider modals={modals}>
 modals.show(ConfirmModal, { text: '...' });
 ```
 

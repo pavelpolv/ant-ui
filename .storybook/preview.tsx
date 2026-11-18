@@ -2,9 +2,7 @@ import { useState } from 'react';
 import type { Preview } from '@storybook/react-vite';
 import { mswLoader } from 'msw-storybook-addon/csf3';
 import { defaultHandlers } from '@/mocks/handlers';
-import { QueryClient, QueryClientProvider, UiProvider, createModalManager } from '@/components';
-
-const modals = createModalManager();
+import { QueryClient, UiProvider } from '@/components';
 
 const preview: Preview = {
   loaders: [mswLoader()],
@@ -17,13 +15,9 @@ const preview: Preview = {
         () => new QueryClient({ defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } } }),
       );
       return (
-        <QueryClientProvider client={queryClient}>
-          <UiProvider>
-            <modals.Provider>
-              <Story />
-            </modals.Provider>
-          </UiProvider>
-        </QueryClientProvider>
+        <UiProvider queryClient={queryClient}>
+          <Story />
+        </UiProvider>
       );
     },
   ],
