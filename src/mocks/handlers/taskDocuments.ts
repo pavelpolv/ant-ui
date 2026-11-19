@@ -95,7 +95,6 @@ export const taskDocumentsHandlers = {
     await delay(600);
     return HttpResponse.json(docTypesDict);
   }),
-  // TODO: ответ POST /new-document-to-list не описан — мок возвращает docVersionId
   newDocumentToList: http.post<never, NewDocumentToListRequest>(NEW_DOCUMENT_URL, async ({ request }) => {
     await delay(500);
     const { counterpartyCode, docTypeId } = await request.json();
@@ -109,7 +108,7 @@ export const taskDocumentsHandlers = {
       statusCode: 'NewDoc',
       statusName: 'Новый',
     }));
-    return HttpResponse.json({ docVersionId: id }, { status: 201 });
+    return HttpResponse.json({ documentId: id, docVersionId: id }, { status: 201 });
   }),
   uploadFile: http.post<{ versionId: string }>(UPLOAD_FILE_URL, async ({ params, request }) => {
     await delay(700);

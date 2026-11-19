@@ -154,11 +154,11 @@ export const doc = (
 export const documentsData: DocumentsDataResponse = {
   docLists: [
     {
-      counterparty: { counterparty: 'cp-3', counterpartyCode: 'cp-3', counterpartyName: 'Без документов', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Guarantor' },
+      counterparty: { counterparty: 'cp-3', counterpartyCode: 'cp-3', counterpartyName: 'Без документов', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Guarantor', counterpartyCrmId: 'crm-cp-3' },
       documentData: [],
     },
     {
-      counterparty: { counterparty: 'cp-2', counterpartyCode: 'cp-2', counterpartyName: 'ООО Ромашка-Строй', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Borrower' },
+      counterparty: { counterparty: 'cp-2', counterpartyCode: 'cp-2', counterpartyName: 'ООО Ромашка-Строй', counterpartyType: 'LEGAL_ENTITY', counterpartyPart: 'Borrower', counterpartyCrmId: 'crm-cp-2' },
       documentData: [
         doc('doc-2', DOC_TYPES.balance, 'Ф1-2024', 'Бухгалтерский баланс за 2024 год', '2025-02-13T10:00:00Z', 'Иванов Сергей Григорьевич', 2, [
           file('f-2', 'Бухгалтерский баланс ООО Ромашка-Строй за 2024 год с отметкой ИФНС.pdf', '2025-02-13T10:00:00Z', 'Иванов Сергей Григорьевич'),
@@ -190,7 +190,7 @@ export const documentsData: DocumentsDataResponse = {
       ],
     },
     {
-      counterparty: { counterparty: 'cp-1', counterpartyCode: 'cp-1', counterpartyName: 'ГК Ромашка', counterpartyType: 'HOLDING', counterpartyPart: '' },
+      counterparty: { counterparty: 'cp-1', counterpartyCode: 'cp-1', counterpartyName: 'ГК Ромашка', counterpartyType: 'HOLDING', counterpartyPart: '', counterpartyCrmId: 'crm-cp-1' },
       documentData: [
         doc('doc-1', DOC_TYPES.charter, '1', 'Устав ГК Ромашка (редакция 2025)', '2025-11-01T10:00:00Z', 'Иванов Сергей Григорьевич', 1, [
           file('f-1', 'Устав.pdf', '2025-11-01T10:00:00Z', 'Иванов Сергей Григорьевич'),

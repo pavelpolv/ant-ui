@@ -62,7 +62,7 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
     {
       key: 'files',
       title: 'Файлы',
-      width: 300,
+      width: 260,
       onCell: groupSpan,
       render: (_, row) =>
         row.kind === 'document'
@@ -72,7 +72,7 @@ export const createColumns = (entityId: string): TableColumnsType<TreeRow> => {
     {
       key: 'status',
       title: 'Статус',
-      width: 130,
+      width: 120,
       onCell: groupSpan,
       render: (_, row) => {
         if (row.kind !== 'document') return null;

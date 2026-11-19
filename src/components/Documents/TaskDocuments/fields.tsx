@@ -8,9 +8,9 @@ export interface EditableColumn {
 }
 
 export const EDITABLE_COLUMNS: EditableColumn[] = [
-  { field: 'assuranceLevel', title: 'Вид заверения', width: 280 },
-  { field: 'provisionForm', title: <>Форма<br />предоставления</>, width: 170 },
-  { field: 'signType', title: <>Способ<br />подписания</>, width: 200 },
+  { field: 'assuranceLevel', title: 'Вид заверения', width: 240 },
+  { field: 'provisionForm', title: <>Форма<br />предоставления</>, width: 150 },
+  { field: 'signType', title: <>Способ<br />подписания</>, width: 160 },
 ];
 
-export const SCROLL_X = 1450;
+export const SCROLL_X = 1276;

@@ -13,7 +13,6 @@ export interface DocTypesDictItem {
   client: boolean;
 }
 
-// TODO: counterpartyCrmId из ТЗ не отправляется — в Counterparty его нет, уточнить источник
 export interface NewDocumentToListRequest extends Counterparty {
   entityId: string; // taskId из props, а не entityId из заявки (см. docs/backend-api.md)
   docTypeId: string;
@@ -24,7 +23,7 @@ export interface UploadFileResponse {
   fileId: string;
 }
 
-// TODO: ответ POST /new-document-to-list не описан — ожидаем docVersionId, сверить с ответом бэкенда
 export interface NewDocumentToListResponse {
+  documentId: string;
   docVersionId: string;
 }

@@ -58,6 +58,7 @@ export interface Counterparty {
   counterpartyName: string;
   counterpartyType: string;
   counterpartyPart: string;
+  counterpartyCrmId: string;
 }
 
 export interface DocumentData {

@@ -88,14 +88,14 @@ interface NewDocumentToListRequest {
   counterpartyName: string;
   counterpartyType: string;
   counterpartyPart: string;
+  counterpartyCrmId: string;
   docTypeId: string;         // id выбранного вида или docType строки вида документа
 }
 ```
 
-- `counterpartyCrmId` из ТЗ не отправляется — в `Counterparty` его нет.
 - `entityId` здесь — `taskId` из props (см. «Параметры»), а не `entityId` из заявки.
-- Ответ — `{ docVersionId: string }`, `201`.
-- [ ] Сверить ответ и префикс `/credit-doc`. Мок добавляет документ со статусом «Новый» в `/taskList`.
+- Ответ — `{ documentId: string; docVersionId: string }`, `201`.
+- [ ] Сверить префикс `/credit-doc`. Мок добавляет документ со статусом «Новый» в `/taskList`.
 
 ### Загрузка файла
 
@@ -113,13 +113,13 @@ Content-Type: multipart/form-data; file=<binary>
 | Колонка | Ширина | Источник | Сохранение |
 |---|---|---|---|
 | Документ | остаток | как в OrderDocuments | — |
-| Файлы | 300 | как в OrderDocuments | — |
-| Статус | 130 | `versionData.statusName` | — |
-| Вид заверения | 280 | `versionData.assuranceLevel` | `{ id, assuranceLevel }` |
-| Форма предоставления | 170 | `versionData.provisionForm` | `{ id, provisionForm }` |
-| Способ подписания | 200 | `versionData.signType` | `{ id, signType }` |
+| Файлы | 260 | как в OrderDocuments | — |
+| Статус | 120 | `versionData.statusName` | — |
+| Вид заверения | 240 | `versionData.assuranceLevel` | `{ id, assuranceLevel }` |
+| Форма предоставления | 150 | `versionData.provisionForm` | `{ id, provisionForm }` |
+| Способ подписания | 160 | `versionData.signType` | `{ id, signType }` |
 
-Горизонтальная прокрутка — если таблица уже 1450px.
+Горизонтальная прокрутка — если таблица уже 1276px.
 
 ## Параметры
 
