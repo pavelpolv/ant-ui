@@ -5,13 +5,13 @@ import { DOC_TYPES } from './orderDocuments';
 const list = (items: [string, string][]): DictList => ({ List: items.map(([code, value]) => ({ code, value })) });
 
 // TODO: в ответе бэкенда коды signType и initiatorChannel пустые — подставлены свои
-const SIGN_TYPE = list([['embedded', 'Встроенная'], ['detached', 'Открепленная'], ['absent', 'Отсутствует']]);
+const SIGN_TYPE = list([['EMBEDDED', 'Встроенная'], ['DETACHED', 'Открепленная'], ['ABSENT', 'Отсутствует']]);
 
 const ASSURANCE_LEVEL = list([
-  ['original', 'Оригинал'],
-  ['copy_notary', 'Копия, заверенная нотариусом'],
-  ['copy_author', 'Копия, заверенная клиентом'],
-  ['copy_clean', 'Незаверенная копия'],
+  ['ORIGINAL', 'Оригинал'],
+  ['COPY_NOTARY', 'Копия, заверенная нотариусом'],
+  ['COPY_AUTHOR', 'Копия, заверенная клиентом'],
+  ['COPY_CLEAN', 'Незаверенная копия'],
 ]);
 
 const baseDict = (id: string, name: string): DocTypeDict => ({
@@ -31,8 +31,8 @@ const baseDict = (id: string, name: string): DocTypeDict => ({
   ]),
   validityPeriod: null,
   initiatorChannel: list([['BANK', 'Банк'], ['OFFICE', 'Офис'], ['DBO', 'ДБО'], ['EMAIL', 'Эл.почта']]),
-  // TODO: в ответе бэкенда для формы предоставления только original — paper и electronic придуманы
-  provisionForm: list([['paper', 'Бумажная'], ['electronic', 'Электронная']]),
+  // TODO: в ответе бэкенда для формы предоставления только ORIGINAL — PAPER и ELECTRONIC придуманы
+  provisionForm: list([['PAPER', 'Бумажная'], ['ELECTRONIC', 'Электронная']]),
   assuranceLevel: ASSURANCE_LEVEL,
   usingCopy: false,
   submittingOriginalDeadline: null,
@@ -49,12 +49,12 @@ const DICTS: Record<string, DocTypeDict> = {
   [DOC_TYPES.charter]: {
     ...baseDict(DOC_TYPES.charter, 'Устав'),
     codeEkd: '443',
-    provisionForm: list([['original', 'Оригинал']]),
+    provisionForm: list([['ORIGINAL', 'Оригинал']]),
   },
   [DOC_TYPES.balance]: {
     ...baseDict(DOC_TYPES.balance, 'Бухгалтерский баланс (Ф1)'),
-    assuranceLevel: { List: ASSURANCE_LEVEL.List.filter(({ code }) => code !== 'copy_notary') },
-    provisionForm: list([['electronic', 'Электронная']]),
+    assuranceLevel: { List: ASSURANCE_LEVEL.List.filter(({ code }) => code !== 'COPY_NOTARY') },
+    provisionForm: list([['ELECTRONIC', 'Электронная']]),
   },
 };
 

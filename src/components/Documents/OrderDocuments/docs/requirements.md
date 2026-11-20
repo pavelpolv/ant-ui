@@ -36,18 +36,18 @@
 
 | Поле | Код | Иконка |
 |---|---|---|
-| Вид заверения | `original` | `FileProtectOutlined` |
-| | `copy_notary` | `AuditOutlined` |
-| | `copy_author` | `CopyOutlined` |
-| | `copy_clean` | `SnippetsOutlined` |
+| Вид заверения | `ORIGINAL` | `FileProtectOutlined` |
+| | `COPY_NOTARY` | `AuditOutlined` |
+| | `COPY_AUTHOR` | `CopyOutlined` |
+| | `COPY_CLEAN` | `SnippetsOutlined` |
 | | по умолчанию | `FileOutlined` |
-| Форма предоставления | `original` | `FileProtectOutlined` |
-| | `paper` (TODO) | `PrinterOutlined` |
-| | `electronic` (TODO) | `CloudOutlined` |
+| Форма предоставления | `ORIGINAL` | `FileProtectOutlined` |
+| | `PAPER` (TODO) | `PrinterOutlined` |
+| | `ELECTRONIC` (TODO) | `CloudOutlined` |
 | | по умолчанию | `InboxOutlined` |
-| Способ подписания | `embedded` (TODO) | `SafetyCertificateOutlined` |
-| | `detached` (TODO) | `DisconnectOutlined` |
-| | `absent` (TODO) | `StopOutlined` |
+| Способ подписания | `EMBEDDED` (TODO) | `SafetyCertificateOutlined` |
+| | `DETACHED` (TODO) | `DisconnectOutlined` |
+| | `ABSENT` (TODO) | `StopOutlined` |
 | | по умолчанию | `EditOutlined` |
 
 Коды с пометкой TODO придуманы: в ответе бэкенда их нет или они пустые.
@@ -73,5 +73,5 @@
 - [ ] Тип `validityPeriod` в ответе `/credit-doc/docTypeDict` (в ответе бэкенда `null`).
 - [ ] Что делать с документом, чьего `docType` нет в `/doc-structure`, и с папкой, у которой `strParent` ссылается на несуществующий id. Сейчас такие строки молча не выводятся.
 - [ ] Может ли одна компания прийти в `docLists` дважды и может ли один `docType` лежать в двух папках. Сейчас это даст дубли ключей строк и документов.
-- [ ] Пустые `code` у `signType` в ответе `/credit-doc/docTypeDict` и коды `provisionForm`, кроме `original`. Сейчас свои, с TODO.
+- [ ] Пустые `code` у `signType` в ответе `/credit-doc/docTypeDict` и коды `provisionForm`, кроме `ORIGINAL`. Сейчас свои, с TODO.
 - [ ] Поле `counterparty.counterparty` — id, который нужно будет передавать в форму «Документ». Как именно — обсудим позже. Сейчас не используется, в моке — копия `counterpartyCode`.
