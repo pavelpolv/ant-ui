@@ -5,6 +5,19 @@ import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import cssnanoPlugin from 'cssnano';
 
+// `antd` бандлится в библиотеку. Локаль резолвим явно в ESM-сборку (`es/`),
+// чтобы не тянуть CJS-шим `antd/locale/ru_RU.js` → `lib/`, и гарантированно
+// инлайним её в бандл вместе с `@rc-component/*`.
+const bundleAntdLocale = {
+  name: 'bundle-antd-locale',
+  setup(build) {
+    build.onResolve({ filter: /^antd\/locale\/ru_RU$/ }, () => ({
+      path: path.resolve(import.meta.dirname, 'node_modules/antd/es/locale/ru_RU.js'),
+      external: false,
+    }));
+  },
+};
+
 const result = await esbuild.build({
   entryPoints: ['./src/components/index.ts'],
   outdir: 'dist',
@@ -15,6 +28,7 @@ const result = await esbuild.build({
   target: ['es2020', 'chrome100', 'firefox100'],
   tsconfig: './tsconfig.build.json',
   plugins: [
+    bundleAntdLocale,
     copy({
       resolveFrom: 'cwd',
       assets: { from: ['./src/style/**/*'], to: ['./dist/style'] },
