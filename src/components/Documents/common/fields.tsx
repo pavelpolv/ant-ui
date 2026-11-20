@@ -20,22 +20,22 @@ import type { DictItem, ValueField } from './types';
 
 const FIELD_ICONS: Record<ValueField, Record<string, ReactNode>> = {
   assuranceLevel: {
-    ORIGINAL: <FileProtectOutlined />,
-    COPY_NOTARY: <AuditOutlined />,
-    COPY_AUTHOR: <CopyOutlined />,
-    COPY_CLEAN: <SnippetsOutlined />,
+    original: <FileProtectOutlined />,
+    copy_notary: <AuditOutlined />,
+    copy_author: <CopyOutlined />,
+    copy_clean: <SnippetsOutlined />,
   },
   provisionForm: {
-    ORIGINAL: <FileProtectOutlined />,
+    original: <FileProtectOutlined />,
     // TODO: этих кодов нет в ответе бэкенда /docTypeDict — придуманы, сверить с бэкендом
-    PAPER: <PrinterOutlined />,
-    ELECTRONIC: <CloudOutlined />,
+    paper: <PrinterOutlined />,
+    electronic: <CloudOutlined />,
   },
   // TODO: в ответе бэкенда /docTypeDict коды пустые — придуманы, сверить с бэкендом
   signType: {
-    EMBEDDED: <SafetyCertificateOutlined />,
-    DETACHED: <DisconnectOutlined />,
-    ABSENT: <StopOutlined />,
+    embedded: <SafetyCertificateOutlined />,
+    detached: <DisconnectOutlined />,
+    absent: <StopOutlined />,
   },
 };
 

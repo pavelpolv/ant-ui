@@ -200,8 +200,8 @@ interface DocTypeDict {
 - Используются `assuranceLevel`, `provisionForm`, `signType`: `code` — значение в `versionData`, `value` — подпись.
 - Иконки — свои, по `code` (`common/fields.tsx`).
 - [ ] В ответе бэкенда у `signType` и части `initiatorChannel` пустые `code` — в моке и иконках подставлены свои
-  (`EMBEDDED`, `DETACHED`, `ABSENT`).
-- [ ] У `provisionForm` в ответе бэкенда только `ORIGINAL` — коды `PAPER` и `ELECTRONIC` придуманы.
+  (`embedded`, `detached`, `absent`).
+- [ ] У `provisionForm` в ответе бэкенда только `original` — коды `paper` и `electronic` придуманы.
 
 ## Связи между ручками
 
